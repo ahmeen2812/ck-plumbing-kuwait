@@ -5,6 +5,7 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Hero } from "@/components/sections/Hero";
 import { Statistics } from "@/components/sections/Statistics";
 import { Services } from "@/components/sections/Services";
+import { Reviews } from "@/components/sections/reviews/Reviews";
 
 export default function HomePage() {
   return (
@@ -15,6 +16,7 @@ export default function HomePage() {
         <Hero />
         <Statistics />
         <Services />
+        <Reviews />
         <div id="contact" className="scroll-mt-24 sm:scroll-mt-28" />
       </main>
     </div>
