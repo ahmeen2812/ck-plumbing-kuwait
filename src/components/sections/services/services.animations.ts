@@ -16,7 +16,8 @@ export interface ServiceAnimationTargets {
   title: HTMLElement | null;
   description: HTMLElement | null;
   scopeItems: HTMLElement[];
-  ctaButton: HTMLElement | null;
+  ctaPrimary: HTMLElement | null;
+  ctaSecondary: HTMLElement | null;
   layout: "text-left" | "image-left";
 }
 
@@ -29,7 +30,8 @@ export function initServiceSectionAnimation(
     title,
     description,
     scopeItems,
-    ctaButton,
+    ctaPrimary,
+    ctaSecondary,
     layout,
   } = targets;
 
@@ -37,97 +39,115 @@ export function initServiceSectionAnimation(
 
   if (prefersReducedMotion()) {
     gsap.set(
-      [imageWrapper, title, description, scopeItems, ctaButton].filter(Boolean),
-      { opacity: 1, x: 0, y: 0, scale: 1, clearProps: "all" }
+      [
+        imageWrapper,
+        title,
+        description,
+        scopeItems,
+        ctaPrimary,
+        ctaSecondary,
+      ].filter(Boolean),
+      { opacity: 1, x: 0, y: 0, scale: 1, clipPath: "inset(0% 0% 0% 0%)", clearProps: "all" }
     );
     return () => {};
   }
 
   const isTextLeft = layout === "text-left";
-  const imageSlideX = isTextLeft ? 24 : -24;
-  const textSlideX = isTextLeft ? -24 : 24;
+  const imageSlideX = isTextLeft ? 28 : -28;
+  const textSlideX = isTextLeft ? -28 : 28;
 
-  const trigger = ScrollTrigger.create({
-    trigger: container,
-    start: "top 78%",
-    once: true,
-    onEnter: () => {
-      const tl = gsap.timeline({ defaults: { ease: "power2.out" } });
-
-      if (imageWrapper) {
-        tl.fromTo(
-          imageWrapper,
-          { opacity: 0, x: imageSlideX, scale: 0.98 },
-          {
-            opacity: 1,
-            x: 0,
-            scale: 1,
-            duration: 0.65,
-            clearProps: "transform,opacity",
-          }
-        );
-      }
-
-      if (title) {
-        tl.fromTo(
-          title,
-          { opacity: 0, x: textSlideX },
-          {
-            opacity: 1,
-            x: 0,
-            duration: 0.5,
-            clearProps: "transform,opacity",
-          },
-          "-=0.4"
-        );
-      }
-
-      if (description) {
-        tl.fromTo(
-          description,
-          { opacity: 0, y: 12 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.45,
-            clearProps: "transform,opacity",
-          },
-          "-=0.3"
-        );
-      }
-
-      if (scopeItems.length > 0) {
-        tl.fromTo(
-          scopeItems,
-          { opacity: 0, y: 8 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.35,
-            stagger: 0.08,
-            clearProps: "transform,opacity",
-          },
-          "-=0.25"
-        );
-      }
-
-      if (ctaButton) {
-        tl.fromTo(
-          ctaButton,
-          { opacity: 0, y: 10 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.4,
-            clearProps: "transform,opacity",
-          },
-          "-=0.2"
-        );
-      }
+  const tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: container,
+      start: "top 78%",
+      end: "bottom top",
+      toggleActions: "play none none reverse",
     },
+    defaults: { ease: "power2.out" },
   });
 
+  if (imageWrapper) {
+    tl.fromTo(
+      imageWrapper,
+      {
+        opacity: 0,
+        x: imageSlideX,
+        clipPath: isTextLeft
+          ? "inset(0% 100% 0% 0%)"
+          : "inset(0% 0% 0% 100%)",
+      },
+      {
+        opacity: 1,
+        x: 0,
+        clipPath: "inset(0% 0% 0% 0%)",
+        duration: 0.75,
+        ease: "power3.out",
+      }
+    );
+  }
+
+  if (title) {
+    tl.fromTo(
+      title,
+      { opacity: 0, x: textSlideX, y: 16 },
+      {
+        opacity: 1,
+        x: 0,
+        y: 0,
+        duration: 0.55,
+      },
+      "-=0.55"
+    );
+  }
+
+  if (description) {
+    tl.fromTo(
+      description,
+      { opacity: 0, y: 18 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.5,
+      },
+      "-=0.4"
+    );
+  }
+
+  if (scopeItems.length > 0) {
+    tl.fromTo(
+      scopeItems,
+      { opacity: 0, x: textSlideX * 0.4, y: 10 },
+      {
+        opacity: 1,
+        x: 0,
+        y: 0,
+        duration: 0.4,
+        stagger: 0.08,
+      },
+      "-=0.3"
+    );
+  }
+
+  const ctaButtons = [ctaPrimary, ctaSecondary].filter(
+    (el): el is HTMLElement => el !== null
+  );
+
+  if (ctaButtons.length > 0) {
+    tl.fromTo(
+      ctaButtons,
+      { opacity: 0, y: 14 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.45,
+        stagger: 0.08,
+      },
+      "-=0.25"
+    );
+  }
+
   return () => {
-    trigger.kill();
+    tl.scrollTrigger?.kill();
+    tl.kill();
   };
 }
