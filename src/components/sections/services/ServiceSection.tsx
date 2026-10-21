@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useLanguage } from "@/lib/LanguageContext";
 import { SITE_CONFIG, type ServiceDefinition } from "@/config/site";
 import { initServiceSectionAnimation } from "./services.animations";
-import { PhoneCall, Check } from "lucide-react";
+import { PhoneCall, Mail, Check } from "lucide-react";
 
 interface ServiceSectionProps {
   service: ServiceDefinition;
@@ -20,7 +20,8 @@ export function ServiceSection({ service, index }: ServiceSectionProps) {
   const titleRef = useRef<HTMLHeadingElement>(null);
   const descriptionRef = useRef<HTMLParagraphElement>(null);
   const scopeRefs = useRef<(HTMLLIElement | null)[]>([]);
-  const ctaRef = useRef<HTMLAnchorElement>(null);
+  const ctaPrimaryRef = useRef<HTMLAnchorElement>(null);
+  const ctaSecondaryRef = useRef<HTMLAnchorElement>(null);
 
   const isTextLeft = service.layout === "text-left";
   const isAltBg = index % 2 === 1;
@@ -36,7 +37,8 @@ export function ServiceSection({ service, index }: ServiceSectionProps) {
       title: titleRef.current,
       description: descriptionRef.current,
       scopeItems: validScopes,
-      ctaButton: ctaRef.current,
+      ctaPrimary: ctaPrimaryRef.current,
+      ctaSecondary: ctaSecondaryRef.current,
       layout: service.layout,
     });
 
@@ -44,6 +46,24 @@ export function ServiceSection({ service, index }: ServiceSectionProps) {
       cleanup();
     };
   }, [service.layout]);
+
+  const handleEnquiryClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    if (typeof window !== "undefined") {
+      const url = new URL(window.location.href);
+      url.searchParams.set("service", service.id);
+      window.history.replaceState({}, "", url.toString());
+      window.dispatchEvent(
+        new CustomEvent("ck:select-service", {
+          detail: { serviceId: service.id },
+        })
+      );
+      const contactSection = document.getElementById("contact");
+      if (contactSection) {
+        contactSection.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  };
 
   const title = locale === "ar" ? service.titleAr : service.titleEn;
   const detailedDesc =
@@ -124,14 +144,27 @@ export function ServiceSection({ service, index }: ServiceSectionProps) {
               </ul>
             </div>
 
-            <a
-              ref={ctaRef}
-              href={SITE_CONFIG.contact.phoneTel}
-              className="inline-flex items-center justify-center gap-2.5 bg-[#132E3C] hover:bg-[#B45C31] text-white text-sm font-bold px-6 py-3.5 transition-colors border border-[#132E3C] hover:border-[#B45C31] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B45C31]"
-            >
-              <PhoneCall className="w-4 h-4 shrink-0" />
-              <span>{content.servicesSection.callCta}</span>
-            </a>
+            {/* Dual Action Suite: Call Us + Send Enquiry */}
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 w-full sm:w-auto">
+              <a
+                ref={ctaPrimaryRef}
+                href={SITE_CONFIG.contact.phoneTel}
+                className="inline-flex items-center justify-center gap-2.5 bg-[#132E3C] hover:bg-[#B45C31] text-white text-sm font-bold px-6 py-3.5 transition-colors border border-[#132E3C] hover:border-[#B45C31] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B45C31]"
+              >
+                <PhoneCall className="w-4 h-4 shrink-0" />
+                <span>{content.servicesSection.callCta}</span>
+              </a>
+
+              <a
+                ref={ctaSecondaryRef}
+                href={`#contact?service=${service.id}`}
+                onClick={handleEnquiryClick}
+                className="inline-flex items-center justify-center gap-2.5 bg-[#FFFFFF] hover:bg-[#EFECE5] text-[#132E3C] text-sm font-bold px-6 py-3.5 transition-colors border border-[#BAC3C3] hover:border-[#132E3C] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B45C31]"
+              >
+                <Mail className="w-4 h-4 text-[#B45C31] shrink-0" />
+                <span>{content.servicesSection.enquiryCta}</span>
+              </a>
+            </div>
           </div>
         </div>
       </div>
