@@ -48,6 +48,35 @@ export const contentEn = {
       "Engineered installations, precision diagnostics, and systematic pipe maintenance across Kuwait.",
     scopeHeading: "Service Details:",
     callCta: "Call Us",
+    enquiryCta: "Send Enquiry",
+  },
+
+  contactSection: {
+    eyebrow: "Service Enquiry",
+    title: "Request Plumbing Engineering Support",
+    subtitle:
+      "Submit your maintenance requirements. Our technical team will review the details and contact you for immediate scheduling.",
+    form: {
+      fullName: "Full Name",
+      fullNamePlaceholder: "e.g., Mohammad Al-Sabah",
+      email: "Email Address",
+      emailPlaceholder: "name@example.com",
+      phone: "Phone Number",
+      phonePlaceholder: "+965 9XXXXXXX / 5XXXXXXX / 6XXXXXXX",
+      service: "Service Required",
+      serviceDefaultOption: "Select service category...",
+      message: "Maintenance Details",
+      messagePlaceholder: "Describe your plumbing requirement, symptoms, or location specifics...",
+      submit: "Submit Enquiry",
+      submitting: "Submitting...",
+      successTitle: "Enquiry Received",
+      successMessage:
+        "Your service enquiry has been logged successfully. Our technical team will contact you shortly.",
+      errorTitle: "Submission Failed",
+      errorMessage: "Please complete all required fields with valid contact information.",
+      configNotice:
+        "Production email delivery requires SMTP_HOST, SMTP_USER, and SMTP_PASS environment variables.",
+    },
   },
 
   aboutSection: {
@@ -151,43 +180,6 @@ export const contentEn = {
           "For potable water supply, high-density polypropylene random copolymer (PPR Type 3) or cross-linked polyethylene (PEX) inside conduits are recommended for their superior resistance to thermal degradation and calcification.",
       },
     ],
-  },
-
-  contactSection: {
-    eyebrow: "Direct Communication",
-    title: "Request a Technical Diagnostic Visit",
-    subtitle:
-      "Submit your maintenance requirement below. We will review the details and contact you to arrange a suitable appointment window.",
-    form: {
-      fullName: "Full Name",
-      fullNamePlaceholder: "e.g., Ahmad Al-Mutawa",
-      phone: "Kuwait Mobile Number",
-      phonePlaceholder: "+965 9XXXXXXX / 5XXXXXXX / 6XXXXXXX",
-      governorate: "Governorate",
-      governoratePlaceholder: "Select your governorate",
-      service: "Primary Service Required",
-      servicePlaceholder: "Select required service category",
-      addressDetails: "Block, Street, House / Building No.",
-      addressPlaceholder: "e.g., Block 3, Street 14, Villa 8",
-      notes: "Problem Description",
-      notesPlaceholder:
-        "Describe visible symptoms (e.g., loss of pressure, damp spots on wall, water heater trip, drainage blockage)...",
-      submitButton: "Send Service Request",
-      submitting: "Submitting...",
-      successTitle: "Enquiry Registered Successfully",
-      successMessage:
-        "Thank you. Your maintenance request has been logged. Our technical team will reach out to you during regular working hours.",
-      errorTitle: "Submission Incomplete",
-      errorMessage:
-        "Please verify that all required fields are filled correctly with a valid 8-digit Kuwait contact number.",
-    },
-    directContacts: {
-      telephoneNotice: "Direct Telephone Dispatch",
-      whatsappNotice: "WhatsApp Technical Channel",
-      workingScheduleNotice: "Operating Hours",
-      statusNotice:
-        "Direct voice lines and WhatsApp numbers will be activated upon client deployment confirmation.",
-    },
   },
 
   footer: {
