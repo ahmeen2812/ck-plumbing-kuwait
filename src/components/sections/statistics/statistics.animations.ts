@@ -36,56 +36,59 @@ export function initStatisticsAnimations(
     return () => {};
   }
 
-  const trigger = ScrollTrigger.create({
-    trigger: sectionEl,
-    start: "top 85%",
-    once: true,
-    onEnter: () => {
-      gsap.fromTo(
-        statBlocks.map((b) => b.card),
-        { opacity: 0, y: 16 },
+  const tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: sectionEl,
+      start: "top 82%",
+      end: "bottom top",
+      toggleActions: "play none none reverse",
+    },
+    defaults: { ease: "power2.out" },
+  });
+
+  tl.fromTo(
+    statBlocks.map((b) => b.card),
+    { opacity: 0, y: 24 },
+    {
+      opacity: 1,
+      y: 0,
+      duration: 0.55,
+      stagger: 0.1,
+    }
+  );
+
+  statBlocks.forEach((block) => {
+    if (block.targetNumber !== undefined) {
+      const counterObj = { val: 0 };
+      tl.to(
+        counterObj,
+        {
+          val: block.targetNumber,
+          duration: 1.2,
+          ease: "power2.out",
+          onUpdate: () => {
+            block.numberEl.textContent = `${Math.floor(counterObj.val)}${block.suffix || ""}`;
+          },
+        },
+        "-=0.4"
+      );
+    } else if (block.staticValue) {
+      tl.fromTo(
+        block.numberEl,
+        { opacity: 0, scale: 0.92 },
         {
           opacity: 1,
-          y: 0,
-          duration: 0.5,
-          stagger: 0.1,
+          scale: 1,
+          duration: 0.45,
           ease: "power2.out",
-          clearProps: "transform,opacity",
-        }
+        },
+        "-=0.4"
       );
-
-      statBlocks.forEach((block) => {
-        if (block.targetNumber !== undefined) {
-          const counterObj = { val: 0 };
-          gsap.to(counterObj, {
-            val: block.targetNumber,
-            duration: 1.4,
-            ease: "power3.out",
-            onUpdate: () => {
-              block.numberEl.textContent = `${Math.floor(counterObj.val)}${block.suffix || ""}`;
-            },
-            onComplete: () => {
-              block.numberEl.textContent = `${block.targetNumber}${block.suffix || ""}`;
-            },
-          });
-        } else if (block.staticValue) {
-          gsap.fromTo(
-            block.numberEl,
-            { opacity: 0, scale: 0.95 },
-            {
-              opacity: 1,
-              scale: 1,
-              duration: 0.5,
-              ease: "power2.out",
-              clearProps: "all",
-            }
-          );
-        }
-      });
-    },
+    }
   });
 
   return () => {
-    trigger.kill();
+    tl.scrollTrigger?.kill();
+    tl.kill();
   };
 }
