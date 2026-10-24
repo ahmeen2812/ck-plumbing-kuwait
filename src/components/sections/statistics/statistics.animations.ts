@@ -36,59 +36,69 @@ export function initStatisticsAnimations(
     return () => {};
   }
 
-  const tl = gsap.timeline({
-    scrollTrigger: {
-      trigger: sectionEl,
-      start: "top 82%",
-      end: "bottom top",
-      toggleActions: "play none none reverse",
-    },
-    defaults: { ease: "power2.out" },
-  });
+  const ctx = gsap.context(() => {
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: sectionEl,
+        start: "top 82%",
+        end: "bottom top",
+        toggleActions: "play none none reverse",
+        invalidateOnRefresh: true,
+      },
+      defaults: { ease: "power3.out" },
+    });
 
-  tl.fromTo(
-    statBlocks.map((b) => b.card),
-    { opacity: 0, y: 24 },
-    {
-      opacity: 1,
-      y: 0,
-      duration: 0.55,
-      stagger: 0.1,
-    }
-  );
+    tl.fromTo(
+      statBlocks.map((b) => b.card),
+      { opacity: 0, y: 35 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.6,
+        stagger: 0.12,
+      }
+    );
 
-  statBlocks.forEach((block) => {
-    if (block.targetNumber !== undefined) {
-      const counterObj = { val: 0 };
-      tl.to(
-        counterObj,
-        {
-          val: block.targetNumber,
-          duration: 1.2,
-          ease: "power2.out",
-          onUpdate: () => {
-            block.numberEl.textContent = `${Math.floor(counterObj.val)}${block.suffix || ""}`;
+    statBlocks.forEach((block) => {
+      if (block.targetNumber !== undefined) {
+        const counter = { val: 0 };
+        block.numberEl.textContent = `0${block.suffix || ""}`;
+
+        tl.to(
+          counter,
+          {
+            val: block.targetNumber,
+            duration: 1.4,
+            ease: "power2.out",
+            onUpdate: () => {
+              block.numberEl.textContent = `${Math.floor(counter.val)}${block.suffix || ""}`;
+            },
           },
-        },
-        "-=0.4"
-      );
-    } else if (block.staticValue) {
-      tl.fromTo(
-        block.numberEl,
-        { opacity: 0, scale: 0.92 },
-        {
-          opacity: 1,
-          scale: 1,
-          duration: 0.45,
-          ease: "power2.out",
-        },
-        "-=0.4"
-      );
-    }
-  });
+          "-=0.4"
+        );
+      } else if (block.staticValue) {
+        tl.fromTo(
+          block.numberEl,
+          { opacity: 0, scale: 0.88 },
+          {
+            opacity: 1,
+            scale: 1,
+            duration: 0.6,
+            ease: "back.out(1.4)",
+          },
+          "-=0.4"
+        );
+      }
+    });
+  }, sectionEl);
+
+  if (typeof document !== "undefined" && document.fonts) {
+    document.fonts.ready.then(() => {
+      ScrollTrigger.refresh();
+    });
+  }
 
   return () => {
-    tl.scrollTrigger?.kill();
-    tl.kill();
+    ctx.revert();
   };
 }
