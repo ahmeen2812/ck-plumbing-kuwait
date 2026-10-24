@@ -36,21 +36,19 @@ export function initStatisticsAnimations(
     return () => {};
   }
 
-  const triggers: ScrollTrigger[] = [];
-
-  const mainTrigger = ScrollTrigger.create({
+  const trigger = ScrollTrigger.create({
     trigger: sectionEl,
-    start: "top 82%",
+    start: "top 85%",
     once: true,
     onEnter: () => {
       gsap.fromTo(
         statBlocks.map((b) => b.card),
-        { opacity: 0, y: 24 },
+        { opacity: 0, y: 16 },
         {
           opacity: 1,
           y: 0,
-          duration: 0.6,
-          stagger: 0.12,
+          duration: 0.5,
+          stagger: 0.1,
           ease: "power2.out",
           clearProps: "transform,opacity",
         }
@@ -61,7 +59,7 @@ export function initStatisticsAnimations(
           const counterObj = { val: 0 };
           gsap.to(counterObj, {
             val: block.targetNumber,
-            duration: 1.6,
+            duration: 1.4,
             ease: "power3.out",
             onUpdate: () => {
               block.numberEl.textContent = `${Math.floor(counterObj.val)}${block.suffix || ""}`;
@@ -73,12 +71,12 @@ export function initStatisticsAnimations(
         } else if (block.staticValue) {
           gsap.fromTo(
             block.numberEl,
-            { opacity: 0, scale: 0.94 },
+            { opacity: 0, scale: 0.95 },
             {
               opacity: 1,
               scale: 1,
-              duration: 0.6,
-              ease: "back.out(1.2)",
+              duration: 0.5,
+              ease: "power2.out",
               clearProps: "all",
             }
           );
@@ -87,9 +85,7 @@ export function initStatisticsAnimations(
     },
   });
 
-  triggers.push(mainTrigger);
-
   return () => {
-    triggers.forEach((t) => t.kill());
+    trigger.kill();
   };
 }
