@@ -8,6 +8,7 @@ export interface GovernorateCoverage {
 export interface ServiceDefinition {
   id: string;
   slug: string;
+  layout: "text-left" | "image-left";
   titleEn: string;
   titleAr: string;
   shortDescriptionEn: string;
@@ -57,11 +58,23 @@ export const SITE_CONFIG = {
     email: "contact@ckplumbingkw.example",
     isPhoneVerified: true,
     isWhatsappVerified: true,
-    isAddressVerified: false,
+    isAddressVerified: true,
+    address: {
+      formatted:
+        "apartment, Pantai Indah, 56000 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",
+      street: "apartment, Pantai Indah",
+      postalCode: "56000",
+      city: "Kuala Lumpur",
+      territory: "Wilayah Persekutuan Kuala Lumpur",
+      country: "Malaysia",
+      isMalaysiaAddress: true,
+      note: "Registered business location in Malaysia; service delivery focused on Kuwait market.",
+    },
     pendingClientConfirmation: {
       commercialRegistrationNumber: "Pending client verification",
       mociLicenceNumber: "Pending client verification",
-      registeredPhysicalAddress: "Kuwait City, State of Kuwait",
+      registeredPhysicalAddress:
+        "apartment, Pantai Indah, 56000 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",
       operatingHours: "Saturday – Thursday: 08:00 – 20:00",
     },
   },
@@ -85,53 +98,143 @@ export const SITE_CONFIG = {
       suffix: "+",
       labelEn: "Projects Completed",
       labelAr: "مشروع منجز",
-      noteEn: "Client operational figure across Kuwait governorates",
-      noteAr: "مؤشر تشغيلي تقديري معتمد للمشاريع في الكويت",
+      noteEn: "Client-reported project completion figure",
+      noteAr: "مؤشر إنجاز المشاريع المعتمد لدى العميل",
     },
     {
       id: "service-availability",
       displayValue: "24/7",
       labelEn: "Service Availability",
       labelAr: "جاهزية الخدمة",
-      noteEn: "Direct response dispatch subject to schedule",
-      noteAr: "جاهزية الاستجابة الميدانية وفق الجدولة",
+      noteEn: "Direct dispatch availability upon schedule",
+      noteAr: "جاهزية الاستجابة والجدولة الميدانية",
     },
     {
-      id: "governorates-covered",
-      targetNumber: 6,
-      displayValue: "6",
+      id: "core-specializations",
+      targetNumber: 4,
+      displayValue: "4",
       suffix: "",
-      labelEn: "Kuwait Governorates Covered",
-      labelAr: "محافظات كويتية مغطاة",
-      noteEn: "Capital, Hawalli, Farwaniya, Ahmadi, Mubarak Al-Kabeer, Jahra",
-      noteAr: "العاصمة، حولي، الفروانية، الأحمدي، مبارك الكبير، والجهراء",
+      labelEn: "Core Service Specializations",
+      labelAr: "تخصصات خدمات أساسية",
+      noteEn: "Repairs, leak detection, drainage, heaters & pumps",
+      noteAr: "السباكة العامة، كشف الخرير، الصرف، والسخانات والمضخات",
     },
   ] as StatisticItem[],
 
-  compliance: {
-    applicableLaws: [
-      {
-        title: "Kuwait Electronic Transactions Law No. 20/2014",
-        notes: "Governs electronic records, authentic inquiries, and secure electronic communications.",
-      },
-      {
-        title: "Kuwait Consumer Protection Law No. 39/2014",
-        notes: "Strict transparency of pricing, accurate quotation before work execution, and prohibition of deceptive warranties.",
-      },
-      {
-        title: "Decree-Law No. 10/2026 on Digital Commerce",
-        notes:
-          "Mandates transparent commercial identification, verifiable contacts, and privacy compliance upon enactment and publication of executive regulations.",
-      },
-      {
-        title: "CITRA Digital Data Guidelines",
-        notes: "Respect of user data confidentiality without unsanctioned tracking or commercial reselling.",
-      },
-    ],
-    onlinePaymentIntegrated: false,
-    unsupportedClaimsPolicy:
-      "We strictly do not advertise fabricated emergency response guarantees, unauthorized 24/7 claims, or unverified licensing certificates.",
-  },
+  services: [
+    {
+      id: "plumbing-repairs",
+      slug: "plumbing-repairs-installations",
+      layout: "text-left",
+      titleEn: "Plumbing Repairs & Installations",
+      titleAr: "إصلاح وتمديد شبكات السباكة",
+      shortDescriptionEn:
+        "Engineered pipe replacements, supply line overhauls, and sanitary fixture fittings for residential and commercial premises.",
+      shortDescriptionAr:
+        "إصلاح وتمديد شبكات المياه، وتركيب الأدوات الصحية والخلاطات، وصيانة تمديدات المطابخ والحمامات بدقة واحترافية.",
+      detailedDescriptionEn:
+        "Comprehensive plumbing maintenance resolving water pressure drops, deteriorated pipes, and fixture wear across residential villas and commercial facilities in Kuwait. Executed with premium copper and heavy-duty PPR pipe systems.",
+      detailedDescriptionAr:
+        "خدمات سباكة متكاملة لمعالجة تلف شبكات المياه وتراجع الضغط في الفلل والمنشآت التجارية في الكويت. نعتمد خامات PPR ونحاس مطابقة للمعايير الهندسية لضمان قوة التغذية وسلامة التمديدات.",
+      imagePath: "/images/services/plumbing-repairs.webp",
+      imageAltEn: "Plumbing repairs and sanitary pipe installation in Kuwait",
+      imageAltAr: "أعمال إصلاح السباكة وتمديد خطوط الأنابيب في الكويت",
+      scopeEn: [
+        "Pipe repairs and structural replacements",
+        "Kitchen and bathroom plumbing maintenance",
+        "Tap, mixer, toilet, and sanitary fixture installations",
+      ],
+      scopeAr: [
+        "إصلاح وتبديل أنابيب المياه التالفة وتجديد التمديدات",
+        "تمديد وصيانة خطوط سباكة المطابخ والحمامات",
+        "تركيب الخلاطات، المغاسل، المراحيض، وأطقم الأدوات الصحية",
+      ],
+    },
+    {
+      id: "water-leak-detection",
+      slug: "water-leak-detection-repair",
+      layout: "image-left",
+      titleEn: "Water Leak Detection & Repair",
+      titleAr: "كشف وإصلاح خرير المياه",
+      shortDescriptionEn:
+        "Acoustic and thermal detection of concealed pipe fractures and targeted repair without disruptive wall or floor demolition.",
+      shortDescriptionAr:
+        "تحديد مواضع الخرير غير المرئية داخل الجدران والأرضيات وإصلاح الشروخ وتلف التمديدات دون تكسير عشوائي في السيراميك.",
+      detailedDescriptionEn:
+        "Hidden water seepage causes silent structural decay, concrete spalling, and inflated municipal water charges. We pinpoint the exact breach within pressurized potable lines and overhead water tank connections to conduct localized, durable repairs.",
+      detailedDescriptionAr:
+        "يؤدي تسريب المياه الخفي إلى تآكل حديد التسليح وتلف الأصباغ وارتفاع فواتير المياه. نحدد الموضع الدقيق للخلل في شبكات التغذية وخزانات المياه لتقديم حلول إصلاح مباشرة ومستدامة.",
+      imagePath: "/images/services/water-leak-detection.webp",
+      imageAltEn: "Non-destructive hidden water leak detection and diagnostic inspection",
+      imageAltAr: "فحص وتشخيص خرير المياه غير المرئي في المباني",
+      scopeEn: [
+        "Hidden water leak detection behind tiles",
+        "Leaking pipes and loose pressure fittings",
+        "Water tank and bathroom leakage repairs",
+      ],
+      scopeAr: [
+        "كشف مواضع خرير المياه غير المرئية خلف السيراميك",
+        "إصلاح تسريبات الأنابيب والوصلات المضغوطة",
+        "معالجة تسريبات خزانات المياه وأرضيات الحمامات",
+      ],
+    },
+    {
+      id: "drain-cleaning",
+      slug: "drain-cleaning-pipe-maintenance",
+      layout: "text-left",
+      titleEn: "Drain Cleaning & Pipe Maintenance",
+      titleAr: "تسليك المجاري وصيانة خطوط الصرف",
+      shortDescriptionEn:
+        "Mechanical clearing and descaling of obstructed branch traps, main sewer stacks, and external inspection manholes.",
+      shortDescriptionAr:
+        "تسليك وتطهير مجاري الصرف المسدودة في المطابخ والحمامات، وتنظيف غرف التفتيش الخارجية (المناهيل) لضمان انسياب الصرف.",
+      detailedDescriptionEn:
+        "Persistent drain blockages caused by grease buildup, calcified minerals, and solid residues are cleared using industrial rotary spring augers. We restore full wastewater flow while eliminating sewer odors and backflow risks.",
+      detailedDescriptionAr:
+        "نعالج انسدادات خطوط الصرف وغرف التفتيش المستعصية الناتجة عن تراكم الدهون والترسبات الكلسية بمعدات السبرنج الميكانيكية الموجهة، لمنع ارتداد مياه الصرف والقضاء التام على الروائح الكريهة.",
+      imagePath: "/images/services/drain-cleaning.webp",
+      imageAltEn: "Drain pipe clearing and sewer cleaning maintenance in Kuwait",
+      imageAltAr: "تسليك مجاري الصرف الصحي وتنظيف خطوط الصرف في الكويت",
+      scopeEn: [
+        "Blocked kitchen and bathroom drains",
+        "Drainage and sewer pipe cleaning",
+        "Drainage line inspection and maintenance",
+      ],
+      scopeAr: [
+        "تسليك انسدادات بالوعات المطابخ ومصارف الحمامات",
+        "تنظيف وتطهير أنابيب الصرف والمجاري الرئيسية",
+        "معاينة وصيانة غرف التفتيش الخارجية (المناهيل)",
+      ],
+    },
+    {
+      id: "water-heaters-pumps",
+      slug: "water-heaters-boilers-pumps",
+      layout: "image-left",
+      titleEn: "Water Heaters & Pumps",
+      titleAr: "السخانات المركزية ومضخات المياه",
+      shortDescriptionEn:
+        "Maintenance, element replacement, and pressure calibration for central water boilers, single heaters, and booster pumps.",
+      shortDescriptionAr:
+        "تركيب وصيانة السخانات المركزية والفردية، واستبدال الشمعات وصمامات الأمان، وتركيب مضخات رفع وضغط المياه.",
+      detailedDescriptionEn:
+        "Ensuring safe hot water delivery and stable household water pressure throughout all seasons. We inspect heating elements, calibrate temperature-pressure safety valves, and service automated roof booster pumps.",
+      detailedDescriptionAr:
+        "نوفر حلولاً متكاملة لاستقرار ضغط المياه وتأمين التدفئة المائية الآمنة في المنازل والفلل. نتولى فحص شمعات وثرموستات السخانات المركزية واستبدال التالف منها، مع ضبط وتركيب مضخات تقوية المياه.",
+      imagePath: "/images/services/water-heaters-pumps.webp",
+      imageAltEn: "Central water heater maintenance and pressure booster pump service",
+      imageAltAr: "صيانة وتركيب السخانات المركزية ومضخات تقوية ضغط المياه",
+      scopeEn: [
+        "Water heater installation and repair",
+        "Central water heater maintenance",
+        "Water pressure booster pump installation and repair",
+      ],
+      scopeAr: [
+        "تركيب وصيانة السخانات الفردية والمركزية",
+        "تبديل شمعات السخان وفحص صمامات الأمان",
+        "تركيب وصيانة مضخات تقوية وتدوير ضغط المياه",
+      ],
+    },
+  ] as ServiceDefinition[],
 
   serviceGovernorates: [
     {
@@ -221,115 +324,4 @@ export const SITE_CONFIG = {
       ],
     },
   ] as GovernorateCoverage[],
-
-  services: [
-    {
-      id: "plumbing-repairs",
-      slug: "plumbing-repairs-installations",
-      titleEn: "Plumbing Repairs & Installations",
-      titleAr: "إصلاح وتمديد شبكات السباكة",
-      shortDescriptionEn:
-        "Professional pipe repairs, sanitary fixture installations, and waterline fittings for residential and commercial properties.",
-      shortDescriptionAr:
-        "إصلاح وتمديد أنابيب المياه، تركيب وصيانة الأدوات الصحية والخلاطات، ومعالجة تمديدات المطابخ والحمامات بدقة واحترافية.",
-      detailedDescriptionEn:
-        "Complete plumbing solutions addressing pipe deterioration, pressure imbalances, and sanitary installations across villas and commercial premises in Kuwait. Executed with heavy-duty copper and PPR materials.",
-      detailedDescriptionAr:
-        "خدمات سباكة متكاملة لمعالجة مشاكل تمديدات المياه وتلف الأنابيب في فلل ومباني الكويت. نلتزم باستخدام خامات متينة ومحابس أصلية لضمان كفاءة التغذية المائية بدون تسريبات.",
-      imagePath: "/images/services/plumbing-repairs.webp",
-      imageAltEn: "Plumber repairing sanitary pipes and bathroom fittings in Kuwait",
-      imageAltAr: "فني صحي يقوم بإصلاح وتمديد شبكات السباكة والأدوات الصحية في الكويت",
-      scopeEn: [
-        "Pipe repairs and structural replacements",
-        "Kitchen and bathroom plumbing maintenance",
-        "Tap, mixer, toilet, and sanitary fixture installations",
-      ],
-      scopeAr: [
-        "إصلاح وتبديل أنابيب المياه التالفة",
-        "تمديد وصيانة سباكة المطابخ والحمامات",
-        "تركيب الخلاطات، المغاسل، المراحيض، والأدوات الصحية",
-      ],
-    },
-    {
-      id: "water-leak-detection",
-      slug: "water-leak-detection-repair",
-      titleEn: "Water Leak Detection & Repair",
-      titleAr: "كشف وإصلاح خرير المياه",
-      shortDescriptionEn:
-        "Identification and engineered repair of concealed pipe leaks, ceiling moisture, and water tank seepages without unnecessary wall breaking.",
-      shortDescriptionAr:
-        "تحديد مواضع الخرير المخفية داخل الجدران والأسقف وإصلاح الشروخ وتلف التمديدات دون تكسير عشوائي في السيراميك.",
-      detailedDescriptionEn:
-        "Concealed leaks lead to high water bills and structural decay. We accurately isolate the root source of seepage in pressure lines, bathroom floors, and overhead tanks to perform targeted repairs.",
-      detailedDescriptionAr:
-        "يتسبب خرير المياه غير المرئي في تلف الخرسانة وارتفاع فواتير المياه. نعمل على تحديد مصدر التسريب بدقة في خطوط التغذية وأرضيات الحمامات وخزانات المياه لمعالجة الخلل بشكل جذري.",
-      imagePath: "/images/services/water-leak-detection.webp",
-      imageAltEn: "Diagnostic water leak detection and pipe inspection",
-      imageAltAr: "كشف خرير المياه وفحص تسريب الأنابيب في المباني السكنية",
-      scopeEn: [
-        "Hidden water leak detection behind tiles",
-        "Leaking pipes and loose pressure fittings",
-        "Water tank and bathroom leakage repairs",
-      ],
-      scopeAr: [
-        "كشف مواضع خرير المياه غير المرئية خلف السيراميك",
-        "إصلاح تسريبات الأنابيب والوصلات المضغوطة",
-        "معالجة تسريبات خزانات المياه وشبكات الصرف الداخلية",
-      ],
-    },
-    {
-      id: "drain-cleaning",
-      slug: "drain-cleaning-pipe-maintenance",
-      titleEn: "Drain Cleaning & Pipe Maintenance",
-      titleAr: "تسليك المجاري وصيانة خطوط الصرف",
-      shortDescriptionEn:
-        "Comprehensive clearance of clogged drains, sewer pipes, and waste lines with complete maintenance of inspection chambers.",
-      shortDescriptionAr:
-        "تسليك وتطهير مجاري الصرف المسدودة في المطابخ والحمامات، وتنظيف غرف التفتيش الخارجية (المناهيل) لضمان انسياب الصرف.",
-      detailedDescriptionEn:
-        "Heavy blockages in kitchen branches and external sewer lines are mechanically cleared and flushed, eliminating grease sediment, foul odours, and recurring backflow into the property.",
-      detailedDescriptionAr:
-        "نعالج انسدادات شبكات الصرف الصحي المستعصية وغرف التفتيش الخارجية باستخدام أدوات التسليك الميكانيكية، مما يزيل الدهون والرواسب ويمنع ارتداد مياه الصرف والروائح الكريهة.",
-      imagePath: "/images/services/drain-cleaning.webp",
-      imageAltEn: "Sewer drain cleaning and pipeline maintenance in Kuwait",
-      imageAltAr: "تسليك وتطهير شبكات الصرف الصحي وغرف التفتيش في الكويت",
-      scopeEn: [
-        "Blocked kitchen and bathroom drains",
-        "Drainage and sewer pipe cleaning",
-        "Drainage line inspection and maintenance",
-      ],
-      scopeAr: [
-        "تسليك انسدادات بالوعات المطابخ والحمامات",
-        "تنظيف وتطهير أنابيب الصرف والمجاري الرئيسية",
-        "فحص وصيانة خطوط الصرف وغرف التفتيش الخارجية",
-      ],
-    },
-    {
-      id: "water-heaters-pumps",
-      slug: "water-heaters-boilers-pumps",
-      titleEn: "Water Heaters & Pumps",
-      titleAr: "السخانات المركزية ومضخات المياه",
-      shortDescriptionEn:
-        "Installation, testing, and maintenance of central water heaters, single-unit boilers, and water pressure booster pumps.",
-      shortDescriptionAr:
-        "تركيب وصيانة السخانات المركزية والفردية، واستبدال الشمعات وصمامات الأمان، وتركيب مضخات رفع وضغط المياه.",
-      detailedDescriptionEn:
-        "Ensuring consistent hot water delivery and stable water pressure throughout high-demand villas. We maintain heating elements, thermostats, expansion valves, and roof-top pressure booster pumps.",
-      detailedDescriptionAr:
-        "نضمن استقرار ضغط المياه وتوفير المياه الساخنة بأمان في المباني والفلل. نقدم خدمات متكاملة لصيانة شمعات وثرموستات السخانات المركزية، إلى جانب ضبط وتركيب مضخات دفع المياه المنزلية.",
-      imagePath: "/images/services/water-heaters-pumps.webp",
-      imageAltEn: "Central water heater and water pressure booster pump service",
-      imageAltAr: "صيانة وتركيب السخان المركزي ومضخات تقوية ضغط المياه في الكويت",
-      scopeEn: [
-        "Water heater installation and repair",
-        "Central water heater maintenance",
-        "Water pressure booster pump installation and repair",
-      ],
-      scopeAr: [
-        "تركيب وصيانة السخانات العادية والمركزية",
-        "تبديل شمعات السخان وفحص صمامات الأمان",
-        "تركيب وصيانة مضخات تقوية وتدوير ضغط المياه",
-      ],
-    },
-  ] as ServiceDefinition[],
 };
