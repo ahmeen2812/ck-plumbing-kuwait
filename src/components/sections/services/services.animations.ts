@@ -53,101 +53,121 @@ export function initServiceSectionAnimation(
   }
 
   const isTextLeft = layout === "text-left";
-  const imageSlideX = isTextLeft ? 28 : -28;
-  const textSlideX = isTextLeft ? -28 : 28;
+  const imageSlideX = isTextLeft ? 40 : -40;
+  const textSlideX = isTextLeft ? -30 : 30;
 
-  const tl = gsap.timeline({
-    scrollTrigger: {
-      trigger: container,
-      start: "top 78%",
-      end: "bottom top",
-      toggleActions: "play none none reverse",
-    },
-    defaults: { ease: "power2.out" },
-  });
-
-  if (imageWrapper) {
-    tl.fromTo(
-      imageWrapper,
-      {
-        opacity: 0,
-        x: imageSlideX,
-        clipPath: isTextLeft
-          ? "inset(0% 100% 0% 0%)"
-          : "inset(0% 0% 0% 100%)",
+  const ctx = gsap.context(() => {
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: container,
+        start: "top 76%",
+        end: "bottom top",
+        toggleActions: "play none none reverse",
+        invalidateOnRefresh: true,
       },
-      {
-        opacity: 1,
-        x: 0,
-        clipPath: "inset(0% 0% 0% 0%)",
-        duration: 0.75,
-        ease: "power3.out",
+      defaults: { ease: "power3.out" },
+    });
+
+    if (imageWrapper) {
+      const innerImg = imageWrapper.querySelector("img");
+
+      tl.fromTo(
+        imageWrapper,
+        {
+          opacity: 0,
+          x: imageSlideX,
+          clipPath: isTextLeft
+            ? "inset(0% 0% 0% 100%)"
+            : "inset(0% 100% 0% 0%)",
+        },
+        {
+          opacity: 1,
+          x: 0,
+          clipPath: "inset(0% 0% 0% 0%)",
+          duration: 0.85,
+          ease: "power3.inOut",
+        }
+      );
+
+      if (innerImg) {
+        tl.fromTo(
+          innerImg,
+          { scale: 1.12 },
+          { scale: 1, duration: 1.1, ease: "power2.out" },
+          "-=0.85"
+        );
       }
-    );
-  }
+    }
 
-  if (title) {
-    tl.fromTo(
-      title,
-      { opacity: 0, x: textSlideX, y: 16 },
-      {
-        opacity: 1,
-        x: 0,
-        y: 0,
-        duration: 0.55,
-      },
-      "-=0.55"
-    );
-  }
+    if (title) {
+      tl.fromTo(
+        title,
+        { opacity: 0, y: 32, x: textSlideX },
+        {
+          opacity: 1,
+          y: 0,
+          x: 0,
+          duration: 0.65,
+        },
+        "-=0.7"
+      );
+    }
 
-  if (description) {
-    tl.fromTo(
-      description,
-      { opacity: 0, y: 18 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.5,
-      },
-      "-=0.4"
-    );
-  }
+    if (description) {
+      tl.fromTo(
+        description,
+        { opacity: 0, y: 22 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.55,
+        },
+        "-=0.45"
+      );
+    }
 
-  if (scopeItems.length > 0) {
-    tl.fromTo(
-      scopeItems,
-      { opacity: 0, x: textSlideX * 0.4, y: 10 },
-      {
-        opacity: 1,
-        x: 0,
-        y: 0,
-        duration: 0.4,
-        stagger: 0.08,
-      },
-      "-=0.3"
-    );
-  }
+    if (scopeItems.length > 0) {
+      tl.fromTo(
+        scopeItems,
+        { opacity: 0, x: textSlideX * 0.5, y: 10 },
+        {
+          opacity: 1,
+          x: 0,
+          y: 0,
+          duration: 0.45,
+          stagger: 0.09,
+        },
+        "-=0.35"
+      );
+    }
 
-  const ctaButtons = [ctaPrimary, ctaSecondary].filter(
-    (el): el is HTMLElement => el !== null
-  );
-
-  if (ctaButtons.length > 0) {
-    tl.fromTo(
-      ctaButtons,
-      { opacity: 0, y: 14 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.45,
-        stagger: 0.08,
-      },
-      "-=0.25"
+    const ctaButtons = [ctaPrimary, ctaSecondary].filter(
+      (el): el is HTMLElement => el !== null
     );
+
+    if (ctaButtons.length > 0) {
+      tl.fromTo(
+        ctaButtons,
+        { opacity: 0, y: 16, scale: 0.96 },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.45,
+          stagger: 0.1,
+        },
+        "-=0.25"
+      );
+    }
+  }, container);
+
+  if (typeof document !== "undefined" && document.fonts) {
+    document.fonts.ready.then(() => {
+      ScrollTrigger.refresh();
+    });
   }
 
   return () => {
-    tl.scrollTrigger?.kill();
-    tl.kill();
+    ctx.revert();
   };
 }
