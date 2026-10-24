@@ -36,18 +36,17 @@ export const contentEn = {
   },
 
   statisticsSection: {
-    eyebrow: "Operational Scale",
     title: "Documented Service Track Record",
-    subtitle: "Measurable service delivery for villas, residential complexes, and commercial properties throughout Kuwait.",
-    disclaimer: "Figures reflect client-reported service volume across all Kuwait governorates.",
+    subtitle:
+      "Measurable service delivery for villas, residential complexes, and commercial properties throughout Kuwait.",
   },
 
   servicesSection: {
     eyebrow: "Our Services",
-    title: "Specialized Plumbing Solutions for Kuwait",
+    title: "Comprehensive Plumbing Specializations",
     subtitle:
-      "Disciplined engineering protocols, durable materials, and methodical diagnostics engineered for Kuwait's climate and building standards.",
-    scopeHeading: "Execution Scope:",
+      "Engineered installations, precision diagnostics, and systematic pipe maintenance across Kuwait.",
+    scopeHeading: "Service Details:",
     callCta: "Call Us",
   },
 
@@ -193,12 +192,12 @@ export const contentEn = {
 
   footer: {
     disclaimer:
-      "CK Plumbing & Electrical Service operates in accordance with Kuwait commercial regulations. All trademarks and project details are held under client confirmation.",
+      "CK Plumbing & Electrical Service operates in accordance with commercial standards. All trademarks and project details are held under client confirmation.",
     privacyLink: "Privacy Disclosures",
     termsLink: "Service Standards & Terms",
-    complianceLink: "Kuwait Regulatory Notice",
+    complianceLink: "Regulatory Notice",
     rights: "All rights reserved.",
     pendingVerificationNotice:
-      "Note: Commercial registration number and official MOCI license are pending formal client confirmation and will be published once verified.",
+      "Note: Commercial registration number and official license details are pending formal client confirmation and will be published once verified.",
   },
 };
