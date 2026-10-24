@@ -13,15 +13,14 @@ function prefersReducedMotion(): boolean {
 export interface ServiceAnimationTargets {
   container: HTMLElement | null;
   imageWrapper: HTMLElement | null;
-  contentWrapper: HTMLElement | null;
   title: HTMLElement | null;
   description: HTMLElement | null;
   scopeItems: HTMLElement[];
   ctaButton: HTMLElement | null;
-  isImageLeft: boolean;
+  layout: "text-left" | "image-left";
 }
 
-export function initServiceItemAnimation(
+export function initServiceSectionAnimation(
   targets: ServiceAnimationTargets
 ): () => void {
   const {
@@ -31,7 +30,7 @@ export function initServiceItemAnimation(
     description,
     scopeItems,
     ctaButton,
-    isImageLeft,
+    layout,
   } = targets;
 
   if (!container) return () => {};
@@ -44,12 +43,13 @@ export function initServiceItemAnimation(
     return () => {};
   }
 
-  const imageXOffset = isImageLeft ? -30 : 30;
-  const textXOffset = isImageLeft ? 20 : -20;
+  const isTextLeft = layout === "text-left";
+  const imageSlideX = isTextLeft ? 24 : -24;
+  const textSlideX = isTextLeft ? -24 : 24;
 
   const trigger = ScrollTrigger.create({
     trigger: container,
-    start: "top 80%",
+    start: "top 78%",
     once: true,
     onEnter: () => {
       const tl = gsap.timeline({ defaults: { ease: "power2.out" } });
@@ -57,12 +57,12 @@ export function initServiceItemAnimation(
       if (imageWrapper) {
         tl.fromTo(
           imageWrapper,
-          { opacity: 0, x: imageXOffset, scale: 0.98 },
+          { opacity: 0, x: imageSlideX, scale: 0.98 },
           {
             opacity: 1,
             x: 0,
             scale: 1,
-            duration: 0.7,
+            duration: 0.65,
             clearProps: "transform,opacity",
           }
         );
@@ -71,21 +71,21 @@ export function initServiceItemAnimation(
       if (title) {
         tl.fromTo(
           title,
-          { opacity: 0, x: textXOffset },
+          { opacity: 0, x: textSlideX },
           {
             opacity: 1,
             x: 0,
             duration: 0.5,
             clearProps: "transform,opacity",
           },
-          "-=0.45"
+          "-=0.4"
         );
       }
 
       if (description) {
         tl.fromTo(
           description,
-          { opacity: 0, y: 14 },
+          { opacity: 0, y: 12 },
           {
             opacity: 1,
             y: 0,
@@ -99,7 +99,7 @@ export function initServiceItemAnimation(
       if (scopeItems.length > 0) {
         tl.fromTo(
           scopeItems,
-          { opacity: 0, y: 10 },
+          { opacity: 0, y: 8 },
           {
             opacity: 1,
             y: 0,
@@ -114,7 +114,7 @@ export function initServiceItemAnimation(
       if (ctaButton) {
         tl.fromTo(
           ctaButton,
-          { opacity: 0, y: 12 },
+          { opacity: 0, y: 10 },
           {
             opacity: 1,
             y: 0,
