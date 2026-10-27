@@ -1,5 +1,3 @@
-// src/content/en.ts
-
 export const contentEn = {
   common: {
     brandName: "CK Plumbing & Electrical Service",
@@ -9,7 +7,7 @@ export const contentEn = {
     switchToLocale: "ar",
     callUs: "Call Technical Desk",
     whatsappUs: "Chat via WhatsApp",
-    requestService: "Request Service",
+    requestService: "Request a Call",
     submitEnquiry: "Submit Work Enquiry",
     serviceGovernorate: "Governorate",
     selectService: "Select Required Service",
@@ -20,30 +18,21 @@ export const contentEn = {
   },
 
   nav: {
-    home: "Overview",
+    home: "Home",
     services: "Services",
-    serviceAreas: "Kuwait Coverage",
-    about: "Engineering Standards",
+    serviceAreas: "Service Areas",
+    about: "About",
     process: "Execution Protocol",
     faq: "Technical FAQ",
-    contact: "Contact & Booking",
+    contact: "Contact",
   },
 
   hero: {
-    eyebrow: "Commercial & Residential Plumbing Engineering",
-    titleLine1: "Disciplined Mechanical Plumbing.",
-    titleLine2: "Engineered for Kuwait Infrastructure.",
+    title: "Precision Plumbing Engineering & Maintenance in Kuwait",
     description:
-      "Reliable plumbing maintenance, pressure line rehabilitation, central boiler diagnostics, and non-invasive leak detection across all six Kuwait Governorates. Executed with industrial precision and verifiable accountability.",
+      "Engineered plumbing solutions, non-destructive acoustic leak detection, drainage unblocking, and water pump systems across all Kuwait Governorates.",
     primaryCta: "Book Inspection",
-    secondaryCta: "View Capabilities",
-    highlights: [
-      { label: "Execution Standard", value: "PPR / PEX High Pressure" },
-      { label: "Diagnostic Method", value: "Acoustic & Thermal Non-Destructive" },
-      { label: "Coverage Reach", value: "All 6 Kuwait Governorates" },
-    ],
-    complianceNotice:
-      "Operational notice: Verified commercial licence, registration number, and formal workshop address are subject to client confirmation before legal publication.",
+    secondaryCta: "Explore Services",
   },
 
   servicesSection: {
