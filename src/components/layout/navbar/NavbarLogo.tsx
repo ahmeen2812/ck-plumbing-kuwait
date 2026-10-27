@@ -20,15 +20,15 @@ export const NavbarLogo = forwardRef<HTMLAnchorElement, NavbarLogoProps>(
       <Link
         ref={ref}
         href="/"
-        className="inline-flex items-center gap-3.5 shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B45C31] group py-1"
+        className="inline-flex items-center gap-2 sm:gap-3.5 min-w-0 shrink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B45C31] group py-1"
         aria-label={brandName}
       >
         <div
           ref={emblemRef}
-          className="relative flex items-center justify-center w-11 h-11 bg-[#132E3C] text-white border border-[#132E3C] transition-colors duration-300 group-hover:bg-[#B45C31] group-hover:border-[#B45C31]"
+          className="relative flex items-center justify-center w-9 h-9 sm:w-11 sm:h-11 shrink-0 bg-[#132E3C] text-white border border-[#132E3C] transition-colors duration-300 group-hover:bg-[#B45C31] group-hover:border-[#B45C31]"
         >
           <svg
-            className="w-5 h-5 text-white transition-transform duration-300 group-hover:scale-105"
+            className="w-4 h-4 sm:w-5 sm:h-5 text-white transition-transform duration-300 group-hover:scale-105"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
@@ -45,7 +45,7 @@ export const NavbarLogo = forwardRef<HTMLAnchorElement, NavbarLogoProps>(
 
         <span
           ref={textRef}
-          className="text-base sm:text-[1.075rem] lg:text-[1.125rem] font-bold text-[#132E3C] tracking-tight whitespace-nowrap select-none transition-colors duration-200 group-hover:text-[#B45C31]"
+          className="text-[13px] min-[360px]:text-sm sm:text-[1.075rem] lg:text-[1.125rem] font-bold text-[#132E3C] tracking-tight truncate max-w-[155px] min-[360px]:max-w-[190px] min-[420px]:max-w-[250px] sm:max-w-none select-none transition-colors duration-200 group-hover:text-[#B45C31]"
         >
           {brandName}
         </span>

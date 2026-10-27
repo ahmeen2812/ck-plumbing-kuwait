@@ -68,12 +68,12 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
       ref={backdropRef}
       role="dialog"
       aria-modal="true"
-      className="fixed inset-0 top-[78px] sm:top-[84px] z-50 bg-[#132E3C]/45 lg:hidden"
+      className="fixed inset-0 top-[72px] sm:top-[84px] z-50 bg-[#132E3C]/45 lg:hidden overflow-y-auto"
       onClick={handleDismiss}
     >
       <div
         ref={drawerRef}
-        className="w-full bg-[#F7F5F0] border-b border-[#D8DDDD] px-6 py-8 shadow-none flex flex-col justify-between"
+        className="w-full max-h-[calc(100dvh-72px)] sm:max-h-[calc(100dvh-84px)] overflow-y-auto bg-[#F7F5F0] border-b border-[#D8DDDD] px-4 py-6 sm:px-6 sm:py-8 shadow-none flex flex-col justify-between"
         onClick={(e) => e.stopPropagation()}
       >
         <nav className="flex flex-col space-y-1" aria-label="Mobile Navigation">
@@ -87,7 +87,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                   itemsRef.current[idx] = el;
                 }}
                 onClick={handleDismiss}
-                className="py-3.5 px-2 text-lg font-semibold text-[#132E3C] hover:text-[#B45C31] border-b border-[#D8DDDD]/60 transition-colors duration-200"
+                className="py-3 px-2 text-base sm:text-lg font-semibold text-[#132E3C] hover:text-[#B45C31] border-b border-[#D8DDDD]/60 transition-colors duration-200"
               >
                 {label}
               </Link>
@@ -99,7 +99,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
           ref={(el) => {
             itemsRef.current[NAVBAR_CONFIG.links.length] = el;
           }}
-          className="pt-8 mt-4 flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5"
+          className="pt-6 sm:pt-8 mt-4 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-3.5"
         >
           <button
             type="button"
@@ -107,7 +107,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
               toggleLocale();
               handleDismiss();
             }}
-            className="flex items-center justify-center gap-2 px-5 py-3.5 bg-[#FFFFFF] border border-[#D8DDDD] text-[#132E3C] text-sm font-bold hover:bg-[#EFECE5] hover:border-[#BAC3C3] transition-colors duration-200"
+            className="flex items-center justify-center gap-2 px-4 py-3 sm:px-5 sm:py-3.5 bg-[#FFFFFF] border border-[#D8DDDD] text-[#132E3C] text-xs sm:text-sm font-bold hover:bg-[#EFECE5] hover:border-[#BAC3C3] transition-colors duration-200"
           >
             <Globe className="w-4 h-4 text-[#536270]" />
             <span>
@@ -120,7 +120,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
           <Link
             href={NAVBAR_CONFIG.cta.href}
             onClick={handleDismiss}
-            className="flex items-center justify-center gap-2.5 bg-[#132E3C] hover:bg-[#B45C31] text-white text-sm font-bold px-6 py-3.5 transition-colors duration-200 border border-[#132E3C] hover:border-[#B45C31]"
+            className="flex items-center justify-center gap-2.5 bg-[#132E3C] hover:bg-[#B45C31] text-white text-xs sm:text-sm font-bold px-5 py-3 sm:px-6 sm:py-3.5 transition-colors duration-200 border border-[#132E3C] hover:border-[#B45C31]"
           >
             <PhoneCall className="w-4 h-4" />
             <span>

@@ -48,14 +48,14 @@ export function Navbar() {
         className="sticky top-0 z-50 w-full bg-[#F7F5F0] border-b border-[#D8DDDD]"
       >
         <div className="site-container">
-          <div className="flex h-[78px] sm:h-[84px] items-center justify-between gap-6 lg:gap-10">
+          <div className="flex h-[72px] sm:h-[84px] items-center justify-between gap-2 sm:gap-4 lg:gap-10">
             <NavbarLogo
               emblemRef={logoEmblemRef}
               textRef={logoTextRef}
             />
 
             <nav
-              className="hidden lg:flex items-center gap-8 xl:gap-10"
+              className="hidden lg:flex items-center gap-8 xl:gap-10 shrink-0"
               aria-label="Main Navigation"
             >
               {NAVBAR_CONFIG.links.map((link, idx) => {
@@ -113,11 +113,11 @@ export function Navbar() {
               </Link>
             </div>
 
-            <div className="flex lg:hidden items-center gap-2.5 shrink-0">
+            <div className="flex lg:hidden items-center gap-1.5 sm:gap-2.5 shrink-0">
               <button
                 type="button"
                 onClick={toggleLocale}
-                className="px-3 py-2 text-xs font-bold text-[#132E3C] bg-white border border-[#D8DDDD] hover:bg-[#EFECE5] transition-colors"
+                className="px-2.5 py-1.5 sm:px-3 sm:py-2 text-xs font-bold text-[#132E3C] bg-white border border-[#D8DDDD] hover:bg-[#EFECE5] transition-colors"
                 aria-label="Toggle language"
               >
                 {locale === "ar" ? "EN" : "عربي"}
@@ -127,7 +127,7 @@ export function Navbar() {
                 ref={mobileTriggerRef}
                 type="button"
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="p-2.5 text-[#132E3C] bg-white border border-[#D8DDDD] hover:bg-[#EFECE5] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B45C31]"
+                className="p-2 sm:p-2.5 text-[#132E3C] bg-white border border-[#D8DDDD] hover:bg-[#EFECE5] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B45C31]"
                 aria-expanded={mobileMenuOpen}
                 aria-label="Toggle navigation menu"
               >
