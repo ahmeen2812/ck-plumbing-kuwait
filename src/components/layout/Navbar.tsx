@@ -99,7 +99,7 @@ export function Navbar() {
                 </span>
               </button>
 
-              <Link
+              <a
                 ref={ctaBtnRef}
                 href={NAVBAR_CONFIG.cta.href}
                 className="inline-flex items-center gap-2.5 px-5 py-2.5 bg-[#132E3C] hover:bg-[#B45C31] text-white text-xs sm:text-sm font-bold transition-all duration-200 border border-[#132E3C] hover:border-[#B45C31] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B45C31]"
@@ -110,7 +110,7 @@ export function Navbar() {
                     ? NAVBAR_CONFIG.cta.labelAr
                     : NAVBAR_CONFIG.cta.labelEn}
                 </span>
-              </Link>
+              </a>
             </div>
 
             <div className="flex lg:hidden items-center gap-1.5 sm:gap-2.5 shrink-0">
