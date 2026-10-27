@@ -1,8 +1,8 @@
-// src/app/layout.tsx
 import type { Metadata, Viewport } from "next";
+import { cookies } from "next/headers";
 import { Manrope, IBM_Plex_Sans_Arabic } from "next/font/google";
 import { SITE_CONFIG } from "@/config/site";
-import { LanguageProvider } from "@/lib/LanguageContext";
+import { LanguageProvider, type Locale } from "@/lib/LanguageContext";
 import "./globals.css";
 
 const manrope = Manrope({
@@ -69,11 +69,16 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const cookieStore = await cookies();
+  const rawLocale = cookieStore.get("ck_locale")?.value;
+  const initialLocale: Locale = rawLocale === "en" ? "en" : "ar";
+  const initialDir = initialLocale === "ar" ? "rtl" : "ltr";
+
   const localBusinessJsonLd = {
     "@context": "https://schema.org",
     "@type": "PlumbingService",
@@ -98,15 +103,21 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="ar" dir="rtl" className={`${manrope.variable} ${ibmPlexSansArabic.variable}`}>
+    <html
+      lang={initialLocale}
+      dir={initialDir}
+      translate="no"
+      className={`notranslate ${manrope.variable} ${ibmPlexSansArabic.variable}`}
+    >
       <head>
+        <meta name="google" content="notranslate" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessJsonLd) }}
         />
       </head>
       <body className="min-h-screen bg-[#F7F5F0] text-[#1E2933] antialiased selection:bg-[#132E3C] selection:text-white">
-        <LanguageProvider>{children}</LanguageProvider>
+        <LanguageProvider initialLocale={initialLocale}>{children}</LanguageProvider>
       </body>
     </html>
   );
