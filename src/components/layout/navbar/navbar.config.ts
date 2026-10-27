@@ -1,5 +1,3 @@
-// src/components/layout/navbar/navbar.config.ts
-
 export interface NavLinkItem {
   id: string;
   href: string;
@@ -26,7 +24,6 @@ export const NAVBAR_CONFIG: NavbarConfig = {
   brandNameEn: "CK Plumbing & Electrical Services",
   brandNameAr: "سي كيه لخدمات السباكة والكهرباء",
 
-  // Strictly 5 essential navigation destinations
   links: [
     {
       id: "home",
@@ -61,9 +58,9 @@ export const NAVBAR_CONFIG: NavbarConfig = {
   ],
 
   cta: {
-    labelEn: "Request a Call",
-    labelAr: "طلب اتصال",
-    href: "#contact",
+    labelEn: "Call Us",
+    labelAr: "اتصل بنا",
+    href: "tel:+601139318597",
   },
 
   languageToggle: {
