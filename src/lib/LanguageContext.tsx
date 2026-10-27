@@ -1,7 +1,6 @@
-// src/lib/LanguageContext.tsx
 "use client";
 
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useContext, useState, useEffect, useTransition } from "react";
 import { contentAr } from "@/content/ar";
 import { contentEn } from "@/content/en";
 
@@ -17,34 +16,45 @@ interface LanguageContextType {
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
-export function LanguageProvider({ children }: { children: React.ReactNode }) {
-  // State of Kuwait requires Arabic by default
-  const [locale, setLocaleState] = useState<Locale>("ar");
+interface LanguageProviderProps {
+  children: React.ReactNode;
+  initialLocale?: Locale;
+}
 
-  useEffect(() => {
-    // Check saved preference or query parameter if available
-    const saved = localStorage.getItem("ck_preferred_locale") as Locale | null;
-    if (saved === "ar" || saved === "en") {
-      setLocaleState(saved);
-      document.documentElement.lang = saved;
-      document.documentElement.dir = saved === "ar" ? "rtl" : "ltr";
-    } else {
-      document.documentElement.lang = "ar";
-      document.documentElement.dir = "rtl";
-    }
-  }, []);
+export function LanguageProvider({
+  children,
+  initialLocale = "ar",
+}: LanguageProviderProps) {
+  const [locale, setLocaleState] = useState<Locale>(initialLocale);
+  const [, startTransition] = useTransition();
 
-  const setLocale = (newLocale: Locale) => {
+  const applyLocale = (newLocale: Locale) => {
     setLocaleState(newLocale);
-    localStorage.setItem("ck_preferred_locale", newLocale);
+    document.cookie = `ck_locale=${newLocale}; path=/; max-age=31536000; SameSite=Lax`;
     document.documentElement.lang = newLocale;
     document.documentElement.dir = newLocale === "ar" ? "rtl" : "ltr";
+    try {
+      localStorage.setItem("ck_preferred_locale", newLocale);
+    } catch {
+      // Storage unavailable or disabled
+    }
+  };
+
+  const setLocale = (newLocale: Locale) => {
+    startTransition(() => {
+      applyLocale(newLocale);
+    });
   };
 
   const toggleLocale = () => {
     const next = locale === "ar" ? "en" : "ar";
     setLocale(next);
   };
+
+  useEffect(() => {
+    document.documentElement.lang = locale;
+    document.documentElement.dir = locale === "ar" ? "rtl" : "ltr";
+  }, [locale]);
 
   const isRtl = locale === "ar";
   const content = locale === "ar" ? contentAr : contentEn;
