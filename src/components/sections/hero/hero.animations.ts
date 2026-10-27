@@ -43,17 +43,17 @@ export function animateHeroEntrance(
   if (heading) {
     tl.fromTo(
       heading,
-      { opacity: 0, y: 22 },
-      { opacity: 1, y: 0, duration: 0.6 }
+      { opacity: 0, y: 18 },
+      { opacity: 1, y: 0, duration: 0.5, clearProps: "transform,opacity" }
     );
   }
 
   if (description) {
     tl.fromTo(
       description,
-      { opacity: 0, y: 16 },
-      { opacity: 1, y: 0, duration: 0.55 },
-      "-=0.35"
+      { opacity: 0, y: 14 },
+      { opacity: 1, y: 0, duration: 0.45, clearProps: "transform,opacity" },
+      "-=0.3"
     );
   }
 
@@ -64,9 +64,9 @@ export function animateHeroEntrance(
   if (ctaButtons.length > 0) {
     tl.fromTo(
       ctaButtons,
-      { opacity: 0, y: 12 },
-      { opacity: 1, y: 0, duration: 0.45, stagger: 0.08 },
-      "-=0.3"
+      { opacity: 0, y: 10 },
+      { opacity: 1, y: 0, duration: 0.4, stagger: 0.08, clearProps: "transform,opacity" },
+      "-=0.25"
     );
   }
 
@@ -74,10 +74,10 @@ export function animateHeroEntrance(
     tl.fromTo(
       imageWrapper,
       { opacity: 0, scale: 0.98 },
-      { opacity: 1, scale: 1, duration: 0.7, ease: "power2.out" },
-      "-=0.5"
+      { opacity: 1, scale: 1, duration: 0.6, ease: "power2.out", clearProps: "transform,opacity" },
+      "-=0.35"
     );
   }
 
   return tl;
-}
+}9
