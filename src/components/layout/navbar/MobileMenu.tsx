@@ -117,7 +117,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
             </span>
           </button>
 
-          <Link
+          <a
             href={NAVBAR_CONFIG.cta.href}
             onClick={handleDismiss}
             className="flex items-center justify-center gap-2.5 bg-[#132E3C] hover:bg-[#B45C31] text-white text-xs sm:text-sm font-bold px-5 py-3 sm:px-6 sm:py-3.5 transition-colors duration-200 border border-[#132E3C] hover:border-[#B45C31]"
@@ -128,7 +128,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                 ? NAVBAR_CONFIG.cta.labelAr
                 : NAVBAR_CONFIG.cta.labelEn}
             </span>
-          </Link>
+          </a>
         </div>
       </div>
     </div>
