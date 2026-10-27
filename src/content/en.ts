@@ -5,9 +5,9 @@ export const contentEn = {
     currency: "KD",
     languageSwitcher: "العربية",
     switchToLocale: "ar",
-    callUs: "Call Technical Desk",
+    callUs: "Call Us",
     whatsappUs: "Chat via WhatsApp",
-    requestService: "Request a Call",
+    requestService: "Call Us",
     submitEnquiry: "Submit Work Enquiry",
     serviceGovernorate: "Governorate",
     selectService: "Select Required Service",
@@ -30,9 +30,9 @@ export const contentEn = {
   hero: {
     title: "Precision Plumbing Engineering & Maintenance in Kuwait",
     description:
-      "Engineered plumbing solutions, non-destructive acoustic leak detection, drainage unblocking, and water pump systems across all Kuwait Governorates.",
-    primaryCta: "Book Inspection",
-    secondaryCta: "Explore Services",
+      "Reliable plumbing maintenance, pressure line rehabilitation, central boiler diagnostics, and non-invasive leak detection across all six Kuwait Governorates. Executed with industrial precision and verifiable accountability.",
+    primaryCta: "Call Us",
+    secondaryCta: "View Capabilities",
   },
 
   servicesSection: {
