@@ -1,4 +1,3 @@
-// src/components/layout/Navbar.tsx
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
@@ -14,40 +13,49 @@ export function Navbar() {
   const { locale, toggleLocale } = useLanguage();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  const navContainerRef = useRef<HTMLElement>(null);
-  const logoWrapperRef = useRef<HTMLDivElement>(null);
+  const headerRef = useRef<HTMLElement>(null);
+  const logoEmblemRef = useRef<HTMLDivElement>(null);
+  const logoTextRef = useRef<HTMLSpanElement>(null);
   const navLinksRef = useRef<(HTMLAnchorElement | null)[]>([]);
-  const actionsWrapperRef = useRef<HTMLDivElement>(null);
+  const languageBtnRef = useRef<HTMLButtonElement>(null);
+  const ctaBtnRef = useRef<HTMLAnchorElement>(null);
+  const mobileTriggerRef = useRef<HTMLButtonElement>(null);
 
-  // Run orchestrated GSAP entrance once on mount
   useEffect(() => {
     const validLinks = navLinksRef.current.filter(
       (el): el is HTMLAnchorElement => el !== null
     );
-    animateNavbarEntrance(
-      navContainerRef.current,
-      logoWrapperRef.current,
-      validLinks,
-      actionsWrapperRef.current
-    );
+
+    const tl = animateNavbarEntrance({
+      header: headerRef.current,
+      logoEmblem: logoEmblemRef.current,
+      logoText: logoTextRef.current,
+      navLinks: validLinks,
+      languageBtn: languageBtnRef.current,
+      ctaBtn: ctaBtnRef.current,
+      mobileTrigger: mobileTriggerRef.current,
+    });
+
+    return () => {
+      tl?.kill();
+    };
   }, []);
 
   return (
     <>
       <header
-        ref={navContainerRef}
+        ref={headerRef}
         className="sticky top-0 z-50 w-full bg-[#F7F5F0] border-b border-[#D8DDDD]"
       >
         <div className="site-container">
-          <div className="flex h-[72px] items-center justify-between gap-6">
-            {/* 1. Brand Logo + Company Name on ONE Line Only */}
-            <div ref={logoWrapperRef} className="shrink-0">
-              <NavbarLogo />
-            </div>
+          <div className="flex h-[78px] sm:h-[84px] items-center justify-between gap-6 lg:gap-10">
+            <NavbarLogo
+              emblemRef={logoEmblemRef}
+              textRef={logoTextRef}
+            />
 
-            {/* 2. Exactly 5 Navigation Links (Desktop) */}
             <nav
-              className="hidden lg:flex items-center gap-8"
+              className="hidden lg:flex items-center gap-8 xl:gap-10"
               aria-label="Main Navigation"
             >
               {NAVBAR_CONFIG.links.map((link, idx) => {
@@ -59,31 +67,31 @@ export function Navbar() {
                     ref={(el) => {
                       navLinksRef.current[idx] = el;
                     }}
-                    className="text-sm font-semibold text-[#1E2933] hover:text-[#B45C31] transition-colors py-1 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#B45C31]"
+                    className="relative group py-2 text-[15px] font-semibold text-[#1E2933] hover:text-[#B45C31] transition-colors duration-200 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#B45C31]"
                   >
-                    {label}
+                    <span>{label}</span>
+                    <span
+                      aria-hidden="true"
+                      className="absolute bottom-0 left-0 rtl:left-auto rtl:right-0 w-0 h-[2px] bg-[#B45C31] transition-all duration-300 ease-out group-hover:w-full"
+                    />
                   </Link>
                 );
               })}
             </nav>
 
-            {/* 3. Action Group: Language Switcher + [Request a Call] Button */}
-            <div
-              ref={actionsWrapperRef}
-              className="hidden lg:flex items-center gap-3 shrink-0"
-            >
-              {/* Refined Language Switcher Toggle */}
+            <div className="hidden lg:flex items-center gap-3.5 shrink-0">
               <button
+                ref={languageBtnRef}
                 type="button"
                 onClick={toggleLocale}
-                className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-bold text-[#132E3C] bg-[#FFFFFF] border border-[#D8DDDD] hover:bg-[#EFECE5] hover:border-[#BAC3C3] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B45C31]"
+                className="inline-flex items-center gap-2 px-3.5 py-2.5 text-xs font-bold text-[#132E3C] bg-[#FFFFFF] border border-[#D8DDDD] hover:bg-[#EFECE5] hover:border-[#BAC3C3] transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B45C31]"
                 aria-label={`Switch language to ${
                   locale === "ar"
                     ? NAVBAR_CONFIG.languageToggle.labelAr
                     : NAVBAR_CONFIG.languageToggle.labelEn
                 }`}
               >
-                <Globe className="w-3.5 h-3.5 text-[#536270]" />
+                <Globe className="w-4 h-4 text-[#536270]" />
                 <span>
                   {locale === "ar"
                     ? NAVBAR_CONFIG.languageToggle.labelAr
@@ -91,12 +99,12 @@ export function Navbar() {
                 </span>
               </button>
 
-              {/* Prominent 'Request a Call' Button */}
               <Link
+                ref={ctaBtnRef}
                 href={NAVBAR_CONFIG.cta.href}
-                className="inline-flex items-center gap-2 px-4 py-2.5 bg-[#132E3C] hover:bg-[#B45C31] text-white text-xs font-bold transition-colors border border-[#132E3C] hover:border-[#B45C31] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B45C31]"
+                className="inline-flex items-center gap-2.5 px-5 py-2.5 bg-[#132E3C] hover:bg-[#B45C31] text-white text-xs sm:text-sm font-bold transition-all duration-200 border border-[#132E3C] hover:border-[#B45C31] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B45C31]"
               >
-                <PhoneCall className="w-3.5 h-3.5" />
+                <PhoneCall className="w-4 h-4" />
                 <span>
                   {locale === "ar"
                     ? NAVBAR_CONFIG.cta.labelAr
@@ -105,21 +113,21 @@ export function Navbar() {
               </Link>
             </div>
 
-            {/* Mobile Controls (Language Quick Toggle + Hamburger Trigger) */}
-            <div className="flex lg:hidden items-center gap-2 shrink-0">
+            <div className="flex lg:hidden items-center gap-2.5 shrink-0">
               <button
                 type="button"
                 onClick={toggleLocale}
-                className="px-2.5 py-1.5 text-xs font-bold text-[#132E3C] bg-white border border-[#D8DDDD]"
+                className="px-3 py-2 text-xs font-bold text-[#132E3C] bg-white border border-[#D8DDDD] hover:bg-[#EFECE5] transition-colors"
                 aria-label="Toggle language"
               >
                 {locale === "ar" ? "EN" : "عربي"}
               </button>
 
               <button
+                ref={mobileTriggerRef}
                 type="button"
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="p-2 text-[#132E3C] bg-white border border-[#D8DDDD] hover:bg-[#EFECE5] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B45C31]"
+                className="p-2.5 text-[#132E3C] bg-white border border-[#D8DDDD] hover:bg-[#EFECE5] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B45C31]"
                 aria-expanded={mobileMenuOpen}
                 aria-label="Toggle navigation menu"
               >
@@ -134,7 +142,6 @@ export function Navbar() {
         </div>
       </header>
 
-      {/* Accessible Mobile Menu Overlay */}
       <MobileMenu
         isOpen={mobileMenuOpen}
         onClose={() => setMobileMenuOpen(false)}

@@ -1,62 +1,150 @@
-// src/components/layout/navbar/navbar.animations.ts
 import { gsap } from "gsap";
 
-/**
- * Checks whether the client has requested reduced motion.
- */
 function prefersReducedMotion(): boolean {
   if (typeof window === "undefined") return false;
   return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 }
 
-/**
- * Orchestrates the initial entrance animation of the desktop and mobile navigation header.
- */
+export interface NavbarElements {
+  header: HTMLElement | null;
+  logoEmblem: HTMLElement | null;
+  logoText: HTMLElement | null;
+  navLinks: HTMLElement[];
+  languageBtn: HTMLElement | null;
+  ctaBtn: HTMLElement | null;
+  mobileTrigger: HTMLElement | null;
+}
+
 export function animateNavbarEntrance(
-  navContainer: HTMLElement | null,
-  logoEl: HTMLElement | null,
-  navLinks: HTMLElement[],
-  actionsEl: HTMLElement | null
+  elements: NavbarElements
 ): gsap.core.Timeline | null {
-  if (!navContainer || prefersReducedMotion()) {
-    if (navContainer) {
-      navContainer.style.opacity = "1";
-      navContainer.style.transform = "none";
-    }
+  const {
+    header,
+    logoEmblem,
+    logoText,
+    navLinks,
+    languageBtn,
+    ctaBtn,
+    mobileTrigger,
+  } = elements;
+
+  if (!header) return null;
+
+  if (prefersReducedMotion()) {
+    gsap.set(
+      [
+        header,
+        logoEmblem,
+        logoText,
+        navLinks,
+        languageBtn,
+        ctaBtn,
+        mobileTrigger,
+      ],
+      { opacity: 1, y: 0, x: 0, scale: 1, clearProps: "all" }
+    );
     return null;
   }
 
-  const tl = gsap.timeline({ defaults: { ease: "power2.out" } });
+  const tl = gsap.timeline({
+    defaults: { ease: "power3.out" },
+  });
 
   tl.fromTo(
-    navContainer,
-    { y: -16, opacity: 0 },
-    { y: 0, opacity: 1, duration: 0.45 }
+    header,
+    { y: -30, opacity: 0 },
+    { y: 0, opacity: 1, duration: 0.6, ease: "power2.out" }
   );
 
-  if (logoEl) {
+  if (logoEmblem) {
     tl.fromTo(
-      logoEl,
-      { opacity: 0, x: -10 },
-      { opacity: 1, x: 0, duration: 0.35 },
-      "-=0.2"
+      logoEmblem,
+      { scale: 0.8, opacity: 0 },
+      { scale: 1, opacity: 1, duration: 0.45 },
+      "-=0.35"
+    );
+  }
+
+  if (logoText) {
+    tl.fromTo(
+      logoText,
+      { x: -12, opacity: 0 },
+      { x: 0, opacity: 1, duration: 0.45 },
+      "-=0.3"
     );
   }
 
   if (navLinks.length > 0) {
     tl.fromTo(
       navLinks,
-      { opacity: 0, y: -6 },
-      { opacity: 1, y: 0, duration: 0.3, stagger: 0.05 },
+      { y: -10, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.4, stagger: 0.05 },
+      "-=0.25"
+    );
+  }
+
+  if (languageBtn) {
+    tl.fromTo(
+      languageBtn,
+      { y: -8, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.35 },
       "-=0.2"
     );
   }
 
-  if (actionsEl) {
+  if (ctaBtn) {
     tl.fromTo(
-      actionsEl,
-      { opacity: 0, x: 10 },
-      { opacity: 1, x: 0, duration: 0.35 },
+      ctaBtn,
+      { scale: 0.94, opacity: 0 },
+      { scale: 1, opacity: 1, duration: 0.4, ease: "back.out(1.4)" },
+      "-=0.2"
+    );
+  }
+
+  if (mobileTrigger) {
+    tl.fromTo(
+      mobileTrigger,
+      { scale: 0.9, opacity: 0 },
+      { scale: 1, opacity: 1, duration: 0.35 },
+      "-=0.3"
+    );
+  }
+
+  return tl;
+}
+
+export function animateMobileMenuOpen(
+  drawerEl: HTMLElement | null,
+  backdropEl: HTMLElement | null,
+  itemsEl: HTMLElement[]
+): gsap.core.Timeline | null {
+  if (!drawerEl || !backdropEl) return null;
+
+  if (prefersReducedMotion()) {
+    gsap.set(backdropEl, { opacity: 1 });
+    gsap.set(drawerEl, { opacity: 1, y: 0 });
+    gsap.set(itemsEl, { opacity: 1, x: 0 });
+    return null;
+  }
+
+  const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+
+  tl.fromTo(
+    backdropEl,
+    { opacity: 0 },
+    { opacity: 1, duration: 0.25 }
+  ).fromTo(
+    drawerEl,
+    { y: -18, opacity: 0 },
+    { y: 0, opacity: 1, duration: 0.35 },
+    "-=0.15"
+  );
+
+  if (itemsEl.length > 0) {
+    tl.fromTo(
+      itemsEl,
+      { x: -14, opacity: 0 },
+      { x: 0, opacity: 1, duration: 0.28, stagger: 0.04 },
       "-=0.2"
     );
   }
@@ -64,34 +152,24 @@ export function animateNavbarEntrance(
   return tl;
 }
 
-/**
- * Smooth entrance animation for the mobile menu drawer.
- */
-export function animateMobileMenuEntrance(
+export function animateMobileMenuClose(
   drawerEl: HTMLElement | null,
-  linksEl: HTMLElement[]
-): gsap.core.Timeline | null {
-  if (!drawerEl || prefersReducedMotion()) {
-    if (drawerEl) drawerEl.style.opacity = "1";
-    return null;
+  backdropEl: HTMLElement | null,
+  onComplete: () => void
+): void {
+  if (!drawerEl || !backdropEl || prefersReducedMotion()) {
+    onComplete();
+    return;
   }
 
-  const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+  const tl = gsap.timeline({
+    defaults: { ease: "power2.in" },
+    onComplete,
+  });
 
-  tl.fromTo(
-    drawerEl,
-    { opacity: 0, y: -12 },
-    { opacity: 1, y: 0, duration: 0.3 }
+  tl.to(drawerEl, { y: -12, opacity: 0, duration: 0.2 }).to(
+    backdropEl,
+    { opacity: 0, duration: 0.18 },
+    "-=0.1"
   );
-
-  if (linksEl.length > 0) {
-    tl.fromTo(
-      linksEl,
-      { opacity: 0, x: -10 },
-      { opacity: 1, x: 0, duration: 0.25, stagger: 0.04 },
-      "-=0.15"
-    );
-  }
-
-  return tl;
 }

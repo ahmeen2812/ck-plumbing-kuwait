@@ -1,12 +1,14 @@
-// src/components/layout/navbar/MobileMenu.tsx
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useLanguage } from "@/lib/LanguageContext";
 import { NAVBAR_CONFIG } from "./navbar.config";
-import { animateMobileMenuEntrance } from "./navbar.animations";
-import { PhoneCall, Globe, X } from "lucide-react";
+import {
+  animateMobileMenuOpen,
+  animateMobileMenuClose,
+} from "./navbar.animations";
+import { PhoneCall, Globe } from "lucide-react";
 
 interface MobileMenuProps {
   isOpen: boolean;
@@ -14,52 +16,66 @@ interface MobileMenuProps {
 }
 
 export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
-  const { locale, isRtl, toggleLocale } = useLanguage();
+  const { locale, toggleLocale } = useLanguage();
+  const [shouldRender, setShouldRender] = useState(isOpen);
+  const backdropRef = useRef<HTMLDivElement>(null);
   const drawerRef = useRef<HTMLDivElement>(null);
-  const linksRef = useRef<(HTMLAnchorElement | null)[]>([]);
+  const itemsRef = useRef<(HTMLElement | null)[]>([]);
 
-  // Lock background scrolling while drawer is active
   useEffect(() => {
     if (isOpen) {
-      document.body.style.overflow = "hidden";
-      const validLinks = linksRef.current.filter(
-        (el): el is HTMLAnchorElement => el !== null
-      );
-      animateMobileMenuEntrance(drawerRef.current, validLinks);
-    } else {
-      document.body.style.overflow = "unset";
+      setShouldRender(true);
     }
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (!shouldRender) return;
+
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+      const validItems = itemsRef.current.filter(
+        (el): el is HTMLElement => el !== null
+      );
+      animateMobileMenuOpen(drawerRef.current, backdropRef.current, validItems);
+    }
+
     return () => {
       document.body.style.overflow = "unset";
     };
-  }, [isOpen]);
+  }, [isOpen, shouldRender]);
 
-  // Close drawer on ESC key
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape" && isOpen) {
-        onClose();
+        handleDismiss();
       }
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isOpen, onClose]);
+  }, [isOpen]);
 
-  if (!isOpen) return null;
+  const handleDismiss = () => {
+    animateMobileMenuClose(drawerRef.current, backdropRef.current, () => {
+      setShouldRender(false);
+      onClose();
+    });
+  };
+
+  if (!shouldRender) return null;
 
   return (
     <div
+      ref={backdropRef}
       role="dialog"
       aria-modal="true"
-      className="fixed inset-0 top-[72px] z-50 bg-[#132E3C]/40 backdrop-none lg:hidden"
-      onClick={onClose}
+      className="fixed inset-0 top-[78px] sm:top-[84px] z-50 bg-[#132E3C]/45 lg:hidden"
+      onClick={handleDismiss}
     >
       <div
         ref={drawerRef}
-        className="w-full bg-[#F7F5F0] border-b border-[#D8DDDD] p-6 shadow-none flex flex-col justify-between"
+        className="w-full bg-[#F7F5F0] border-b border-[#D8DDDD] px-6 py-8 shadow-none flex flex-col justify-between"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Navigation Links List */}
         <nav className="flex flex-col space-y-1" aria-label="Mobile Navigation">
           {NAVBAR_CONFIG.links.map((link, idx) => {
             const label = locale === "ar" ? link.labelAr : link.labelEn;
@@ -68,10 +84,10 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                 key={link.id}
                 href={link.href}
                 ref={(el) => {
-                  linksRef.current[idx] = el;
+                  itemsRef.current[idx] = el;
                 }}
-                onClick={onClose}
-                className="py-3 px-2 text-base font-semibold text-[#132E3C] hover:text-[#B45C31] border-b border-[#D8DDDD]/60 transition-colors"
+                onClick={handleDismiss}
+                className="py-3.5 px-2 text-lg font-semibold text-[#132E3C] hover:text-[#B45C31] border-b border-[#D8DDDD]/60 transition-colors duration-200"
               >
                 {label}
               </Link>
@@ -79,16 +95,19 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
           })}
         </nav>
 
-        {/* Lower Action Suite: Language Switcher + Call CTA */}
-        <div className="pt-6 mt-4 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-          {/* Language Switcher Button */}
+        <div
+          ref={(el) => {
+            itemsRef.current[NAVBAR_CONFIG.links.length] = el;
+          }}
+          className="pt-8 mt-4 flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5"
+        >
           <button
             type="button"
             onClick={() => {
               toggleLocale();
-              onClose();
+              handleDismiss();
             }}
-            className="flex items-center justify-center gap-2 px-4 py-3 bg-[#FFFFFF] border border-[#D8DDDD] text-[#132E3C] text-xs font-bold hover:bg-[#EFECE5] transition-colors"
+            className="flex items-center justify-center gap-2 px-5 py-3.5 bg-[#FFFFFF] border border-[#D8DDDD] text-[#132E3C] text-sm font-bold hover:bg-[#EFECE5] hover:border-[#BAC3C3] transition-colors duration-200"
           >
             <Globe className="w-4 h-4 text-[#536270]" />
             <span>
@@ -98,13 +117,12 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
             </span>
           </button>
 
-          {/* Primary Action Button */}
           <Link
             href={NAVBAR_CONFIG.cta.href}
-            onClick={onClose}
-            className="flex items-center justify-center gap-2 bg-[#132E3C] hover:bg-[#B45C31] text-white text-xs font-bold px-6 py-3 transition-colors border border-[#132E3C] hover:border-[#B45C31]"
+            onClick={handleDismiss}
+            className="flex items-center justify-center gap-2.5 bg-[#132E3C] hover:bg-[#B45C31] text-white text-sm font-bold px-6 py-3.5 transition-colors duration-200 border border-[#132E3C] hover:border-[#B45C31]"
           >
-            <PhoneCall className="w-3.5 h-3.5" />
+            <PhoneCall className="w-4 h-4" />
             <span>
               {locale === "ar"
                 ? NAVBAR_CONFIG.cta.labelAr
