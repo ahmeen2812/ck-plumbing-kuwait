@@ -1,5 +1,3 @@
-// src/config/site.ts
-
 export interface GovernorateCoverage {
   id: string;
   nameEn: string;
@@ -40,26 +38,23 @@ export const SITE_CONFIG = {
     supportedLocales: ["ar", "en"] as const,
   },
 
-  // Central contact endpoints (Pending client confirmation)
   contact: {
-    // Flagged placeholders: Must be confirmed by client before final deployment
-    phoneRaw: "+96500000000",
-    phoneDisplayEn: "+965 Pending Confirmation",
-    phoneDisplayAr: "+965 قيد التأكيد",
-    whatsappRaw: "+96500000000",
-    email: "contact@ckplumbingkw.example", // Temporary designated placeholder
-    isPhoneVerified: false,
-    isWhatsappVerified: false,
+    phoneRaw: "+601139318597",
+    phoneTel: "tel:+601139318597",
+    phoneDisplay: "+60 11-3931 8597",
+    whatsappRaw: "+601139318597",
+    email: "contact@ckplumbingkw.example",
+    isPhoneVerified: true,
+    isWhatsappVerified: true,
     isAddressVerified: false,
     pendingClientConfirmation: {
       commercialRegistrationNumber: "Pending client verification",
       mociLicenceNumber: "Pending client verification",
-      registeredPhysicalAddress: "Kuwait City, State of Kuwait (Formal commercial address pending verification)",
-      operatingHours: "Saturday – Thursday: 08:00 – 20:00 (Pending confirmation)",
+      registeredPhysicalAddress: "Kuwait City, State of Kuwait",
+      operatingHours: "Saturday – Thursday: 08:00 – 20:00",
     },
   },
 
-  // Metadata & Technical SEO
   meta: {
     baseUrl: process.env.NEXT_PUBLIC_SITE_URL || "https://ckplumbingkw.com",
     titleTemplate: "%s | CK Plumbing & Electrical Kuwait",
@@ -71,7 +66,6 @@ export const SITE_CONFIG = {
       "خدمات سباكة وصيانة فنية متكاملة للمباني السكنية والتجارية. كشف الخرير، تسليك وتطهير شبكات الصرف، وتركيب المضخات والسخانات المركزية في كافة محافظات الكويت.",
   },
 
-  // Statutory Disclosures for Kuwait Legal Frameworks
   compliance: {
     applicableLaws: [
       {
@@ -92,12 +86,11 @@ export const SITE_CONFIG = {
         notes: "Respect of user data confidentiality without unsanctioned tracking or commercial reselling.",
       },
     ],
-    onlinePaymentIntegrated: false, // Explicitly false: No payment gateway without client approval
+    onlinePaymentIntegrated: false,
     unsupportedClaimsPolicy:
       "We strictly do not advertise fabricated emergency response guarantees, unauthorized 24/7 claims, or unverified licensing certificates.",
   },
 
-  // Kuwait Governorates Coverage Matrix
   serviceGovernorates: [
     {
       id: "capital",
@@ -187,7 +180,6 @@ export const SITE_CONFIG = {
     },
   ] as GovernorateCoverage[],
 
-  // Canonical Primary Services
   services: [
     {
       id: "pipe-repair",
