@@ -1,31 +1,25 @@
-// src/app/page.tsx
 "use client";
 
 import React from "react";
 import { Navbar } from "@/components/layout/Navbar";
 import { Hero } from "@/components/sections/Hero";
+import { Statistics } from "@/components/sections/Statistics";
 import { Services } from "@/components/sections/Services";
 import { useLanguage } from "@/lib/LanguageContext";
-import { SITE_CONFIG } from "@/config/site";
-import { PhoneCall, ShieldAlert, ArrowLeft, ArrowRight } from "lucide-react";
+import { ShieldAlert } from "lucide-react";
 
 export default function HomePage() {
-  const { locale, isRtl, content } = useLanguage();
+  const { content } = useLanguage();
 
   return (
     <div className="min-h-screen flex flex-col bg-[#F7F5F0] text-[#1E2933]">
-      {/* 1. Bilingual Navigation Header */}
       <Navbar />
 
-      {/* 2. Main Page Content */}
       <main className="flex-1">
-        {/* Engineered Hero Section */}
         <Hero />
-
-        {/* Specialized Services Section */}
+        <Statistics />
         <Services />
 
-        {/* Intermediate Live Testing Anchor for #contact bookings */}
         <section
           id="contact"
           className="w-full bg-[#132E3C] text-white py-16 border-t border-[#D8DDDD]"
