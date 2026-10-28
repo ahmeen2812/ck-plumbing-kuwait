@@ -21,6 +21,17 @@ export interface ServiceDefinition {
   scopeAr: string[];
 }
 
+export interface StatisticItem {
+  id: string;
+  targetNumber?: number;
+  displayValue: string;
+  suffix?: string;
+  labelEn: string;
+  labelAr: string;
+  noteEn: string;
+  noteAr: string;
+}
+
 export const SITE_CONFIG = {
   brand: {
     nameEn: "CK Plumbing & Electrical Service",
@@ -65,6 +76,37 @@ export const SITE_CONFIG = {
     defaultDescriptionAr:
       "خدمات سباكة وصيانة فنية متكاملة للمباني السكنية والتجارية. كشف الخرير، تسليك وتطهير شبكات الصرف، وتركيب المضخات والسخانات المركزية في كافة محافظات الكويت.",
   },
+
+  statistics: [
+    {
+      id: "projects-completed",
+      targetNumber: 600,
+      displayValue: "600+",
+      suffix: "+",
+      labelEn: "Projects Completed",
+      labelAr: "مشروع منجز",
+      noteEn: "Client operational figure across Kuwait governorates",
+      noteAr: "مؤشر تشغيلي تقديري معتمد للمشاريع في الكويت",
+    },
+    {
+      id: "service-availability",
+      displayValue: "24/7",
+      labelEn: "Service Availability",
+      labelAr: "جاهزية الخدمة",
+      noteEn: "Direct response dispatch subject to schedule",
+      noteAr: "جاهزية الاستجابة الميدانية وفق الجدولة",
+    },
+    {
+      id: "governorates-covered",
+      targetNumber: 6,
+      displayValue: "6",
+      suffix: "",
+      labelEn: "Kuwait Governorates Covered",
+      labelAr: "محافظات كويتية مغطاة",
+      noteEn: "Capital, Hawalli, Farwaniya, Ahmadi, Mubarak Al-Kabeer, Jahra",
+      noteAr: "العاصمة، حولي، الفروانية، الأحمدي، مبارك الكبير، والجهراء",
+    },
+  ] as StatisticItem[],
 
   compliance: {
     applicableLaws: [
@@ -182,177 +224,111 @@ export const SITE_CONFIG = {
 
   services: [
     {
-      id: "pipe-repair",
-      slug: "pipe-repair-maintenance",
-      titleEn: "Pipe Repair & Pressure Lines",
-      titleAr: "إصلاح وتمديد شبكات الأنابيب",
+      id: "plumbing-repairs",
+      slug: "plumbing-repairs-installations",
+      titleEn: "Plumbing Repairs & Installations",
+      titleAr: "إصلاح وتمديد شبكات السباكة",
       shortDescriptionEn:
-        "Engineered repair and installation of high-pressure PPR, PEX, and copper water distribution lines.",
+        "Professional pipe repairs, sanitary fixture installations, and waterline fittings for residential and commercial properties.",
       shortDescriptionAr:
-        "تمديد وصيانة خطوط تغذية المياه المضغوطة بمواد PPR والبكس والنحاس وفق المعايير الهندسية.",
+        "إصلاح وتمديد أنابيب المياه، تركيب وصيانة الأدوات الصحية والخلاطات، ومعالجة تمديدات المطابخ والحمامات بدقة واحترافية.",
       detailedDescriptionEn:
-        "Water distribution networks in Kuwait face extreme summer thermal cycles and high mineral loads. We conduct structural evaluations, isolate pipe stress fractures, and install robust, pressure-tested piping systems.",
+        "Complete plumbing solutions addressing pipe deterioration, pressure imbalances, and sanitary installations across villas and commercial premises in Kuwait. Executed with heavy-duty copper and PPR materials.",
       detailedDescriptionAr:
-        "تتعرض شبكات المياه في الكويت لدرجات حرارة صيفية قصوى وأملاح عالية. نوفر فحوصات هندسية دقيقة لتحديد الشروخ واستبدال الخطوط التالفة بشبكات بولي بروبيلين مقاومة للضغط ومختبرة هيدروليكياً.",
-      imagePath: "/images/service-pipe-repair.webp",
-      imageAltEn: "High-grade copper and PPR pipe welding and installation in Kuwait",
-      imageAltAr: "تركيب ولحام خطوط الأنابيب النحاسية والبولي بروبيلين في الكويت",
+        "خدمات سباكة متكاملة لمعالجة مشاكل تمديدات المياه وتلف الأنابيب في فلل ومباني الكويت. نلتزم باستخدام خامات متينة ومحابس أصلية لضمان كفاءة التغذية المائية بدون تسريبات.",
+      imagePath: "/images/services/plumbing-repairs.webp",
+      imageAltEn: "Plumber repairing sanitary pipes and bathroom fittings in Kuwait",
+      imageAltAr: "فني صحي يقوم بإصلاح وتمديد شبكات السباكة والأدوات الصحية في الكويت",
       scopeEn: [
-        "PPR, PEX, and multi-layer pipe fusion",
-        "Hydrostatic pressure testing before drywall closure",
-        "Isolation valve replacement and manifold re-balancing",
-        "Thermal expansion joint installation",
+        "Pipe repairs and structural replacements",
+        "Kitchen and bathroom plumbing maintenance",
+        "Tap, mixer, toilet, and sanitary fixture installations",
       ],
       scopeAr: [
-        "لحام وتركيب شبكات PPR وبكس المعتمدة",
-        "اختبار الضغط الهيدروليكي قبل إغلاق القواطع",
-        "استبدال محابس العزل وتوازن موزعات المياه (Manifolds)",
-        "معالجة فواصل التمدد الحراري لحماية التمديدات",
+        "إصلاح وتبديل أنابيب المياه التالفة",
+        "تمديد وصيانة سباكة المطابخ والحمامات",
+        "تركيب الخلاطات، المغاسل، المراحيض، والأدوات الصحية",
       ],
     },
     {
-      id: "drainage-clearing",
-      slug: "drainage-sewer-clearing",
-      titleEn: "Drainage & Sewer Clearing",
-      titleAr: "تسليك وتطهير شبكات الصرف",
+      id: "water-leak-detection",
+      slug: "water-leak-detection-repair",
+      titleEn: "Water Leak Detection & Repair",
+      titleAr: "كشف وإصلاح خرير المياه",
       shortDescriptionEn:
-        "Mechanical and high-pressure jetting solutions for obstructed main sewer lines and residential stacks.",
+        "Identification and engineered repair of concealed pipe leaks, ceiling moisture, and water tank seepages without unnecessary wall breaking.",
       shortDescriptionAr:
-        "حلول هندسية وميكانيكية بالضغط العالي لتسليك خطوط الصرف الرئيسية وتطهير المجاري الداخلية.",
+        "تحديد مواضع الخرير المخفية داخل الجدران والأسقف وإصلاح الشروخ وتلف التمديدات دون تكسير عشوائي في السيراميك.",
       detailedDescriptionEn:
-        "Blockages in grease-laden kitchen branches and main inspection chambers are cleared using specialized mechanical rotary cables and pressure equipment without damaging underlying PVC or vitrified clay lines.",
+        "Concealed leaks lead to high water bills and structural decay. We accurately isolate the root source of seepage in pressure lines, bathroom floors, and overhead tanks to perform targeted repairs.",
       detailedDescriptionAr:
-        "نعالج انسدادات غرف التفتيش وخطوط الصرف الممتلئة بالدهون والرواسب الصلبة باستخدام مكائن السبرنج الدوارة ومعدات ضغط المياه الموجه دون إلحاق الضرر بالأنابيب البلاستيكية أو الفخارية.",
-      imagePath: "/images/service-drainage-clearing.webp",
-      imageAltEn: "Professional mechanical drain jetting and obstruction removal",
-      imageAltAr: "تسليك ميكانيكي لخطوط الصرف وغرف التفتيش في المباني",
+        "يتسبب خرير المياه غير المرئي في تلف الخرسانة وارتفاع فواتير المياه. نعمل على تحديد مصدر التسريب بدقة في خطوط التغذية وأرضيات الحمامات وخزانات المياه لمعالجة الخلل بشكل جذري.",
+      imagePath: "/images/services/water-leak-detection.webp",
+      imageAltEn: "Diagnostic water leak detection and pipe inspection",
+      imageAltAr: "كشف خرير المياه وفحص تسريب الأنابيب في المباني السكنية",
       scopeEn: [
-        "Mechanical rotary spring cable clearing",
-        "Main inspection chamber (manhole) desilting",
-        "Grease interceptor cleanout and stack venting",
-        "Anti-backflow check valve installation",
+        "Hidden water leak detection behind tiles",
+        "Leaking pipes and loose pressure fittings",
+        "Water tank and bathroom leakage repairs",
       ],
       scopeAr: [
-        "تسليك بالسبرنج الآلي الدوار للانسدادات المستعصية",
-        "تنظيف وتطهير غرف التفتيش الخارجية (Manholes)",
-        "معالجة انسدادات مصائد الزيوت وهوايات الصرف",
-        "تركيب ردادات لمنع ارتداد مياه الصرف والقوارض",
+        "كشف مواضع خرير المياه غير المرئية خلف السيراميك",
+        "إصلاح تسريبات الأنابيب والوصلات المضغوطة",
+        "معالجة تسريبات خزانات المياه وشبكات الصرف الداخلية",
       ],
     },
     {
-      id: "water-heaters",
-      slug: "water-heaters-boilers",
-      titleEn: "Water Heaters & Central Boilers",
-      titleAr: "سخانات المياه والأنظمة المركزية",
+      id: "drain-cleaning",
+      slug: "drain-cleaning-pipe-maintenance",
+      titleEn: "Drain Cleaning & Pipe Maintenance",
+      titleAr: "تسليك المجاري وصيانة خطوط الصرف",
       shortDescriptionEn:
-        "Installation, element testing, and safety valve commissioning for central and single-unit water heaters.",
+        "Comprehensive clearance of clogged drains, sewer pipes, and waste lines with complete maintenance of inspection chambers.",
       shortDescriptionAr:
-        "تركيب وصيانة السخانات المركزية والفردية، فحص المقاومات الكهربائية، ومعايرة صمامات الأمان.",
+        "تسليك وتطهير مجاري الصرف المسدودة في المطابخ والحمامات، وتنظيف غرف التفتيش الخارجية (المناهيل) لضمان انسياب الصرف.",
       detailedDescriptionEn:
-        "Complete diagnosis of scale accumulation, burnt heating elements, faulty thermostats, and temperature-pressure relief (TPR) valves to ensure safe, compliant domestic hot water operation.",
+        "Heavy blockages in kitchen branches and external sewer lines are mechanically cleared and flushed, eliminating grease sediment, foul odours, and recurring backflow into the property.",
       detailedDescriptionAr:
-        "تشخيص متكامل لمشاكل ترسب التكلسات، احتراق شمعات التسخين، وتلف الثرموستات. نقوم بتركيب واختبار صمامات الضغط والحرارة (TPR) لضمان التشغيل الآمن وتفادي أخطار الضغط الزائد.",
-      imagePath: "/images/service-water-heaters.webp",
-      imageAltEn: "Central water heater and boiler maintenance in Kuwait residential building",
-      imageAltAr: "صيانة وضبط سخان مياه مركزي وفحص صمامات الأمان في الكويت",
+        "نعالج انسدادات شبكات الصرف الصحي المستعصية وغرف التفتيش الخارجية باستخدام أدوات التسليك الميكانيكية، مما يزيل الدهون والرواسب ويمنع ارتداد مياه الصرف والروائح الكريهة.",
+      imagePath: "/images/services/drain-cleaning.webp",
+      imageAltEn: "Sewer drain cleaning and pipeline maintenance in Kuwait",
+      imageAltAr: "تسليك وتطهير شبكات الصرف الصحي وغرف التفتيش في الكويت",
       scopeEn: [
-        "Central boiler element and thermostat replacement",
-        "TPR safety valve inspection and discharge line testing",
-        "Sacrificial magnesium anode replacement",
-        "Single electric heater wall-mounting & pipe union fitting",
+        "Blocked kitchen and bathroom drains",
+        "Drainage and sewer pipe cleaning",
+        "Drainage line inspection and maintenance",
       ],
       scopeAr: [
-        "استبدال شمعات السخان المركزي والثرموستات المعتمدة",
-        "فحص صمام الأمان (رداد التنفيس) وخط التصريف",
-        "استبدال عمود الماغنيسيوم لمقاومة الصدأ والتآكل",
-        "تركيب وتوصيل السخانات الفردية بوصلات عزل متينة",
+        "تسليك انسدادات بالوعات المطابخ والحمامات",
+        "تنظيف وتطهير أنابيب الصرف والمجاري الرئيسية",
+        "فحص وصيانة خطوط الصرف وغرف التفتيش الخارجية",
       ],
     },
     {
-      id: "water-pumps",
-      slug: "booster-submersible-pumps",
-      titleEn: "Water Booster & Sump Pumps",
-      titleAr: "مضخات رفع المياه ومضخات الغاطس",
+      id: "water-heaters-pumps",
+      slug: "water-heaters-boilers-pumps",
+      titleEn: "Water Heaters & Pumps",
+      titleAr: "السخانات المركزية ومضخات المياه",
       shortDescriptionEn:
-        "Commissioning and service for variable-speed booster pumps, roof supply systems, and basement sump pumps.",
+        "Installation, testing, and maintenance of central water heaters, single-unit boilers, and water pressure booster pumps.",
       shortDescriptionAr:
-        "تركيب وبرمجة مضخات تعزيز الضغط الذكية، مضخات السطح، ومضخات السرداب الغاطسة.",
+        "تركيب وصيانة السخانات المركزية والفردية، واستبدال الشمعات وصمامات الأمان، وتركيب مضخات رفع وضغط المياه.",
       detailedDescriptionEn:
-        "Maintaining steady domestic water pressure requires properly calibrated booster pump controllers, expansion diaphragms, and reliable basement drainage pumps for unexpected groundwater ingress.",
+        "Ensuring consistent hot water delivery and stable water pressure throughout high-demand villas. We maintain heating elements, thermostats, expansion valves, and roof-top pressure booster pumps.",
       detailedDescriptionAr:
-        "لضمان استقرار ضغط المياه في الأدوار العليا، نقوم بتركيب وضبط مضخات الدفع الذكية (Inverter) وفحص بلونات الضغط، إلى جانب صيانة مضخات السرداب الغاطسة وتجهيزها بمفاتيح العوامات التلقائية.",
-      imagePath: "/images/service-water-pumps.webp",
-      imageAltEn: "Booster water pump with electronic pressure controller",
-      imageAltAr: "مضخة تعزيز ضغط المياه مع جهاز التحكم الإلكتروني الأوتوماتيكي",
+        "نضمن استقرار ضغط المياه وتوفير المياه الساخنة بأمان في المباني والفلل. نقدم خدمات متكاملة لصيانة شمعات وثرموستات السخانات المركزية، إلى جانب ضبط وتركيب مضخات دفع المياه المنزلية.",
+      imagePath: "/images/services/water-heaters-pumps.webp",
+      imageAltEn: "Central water heater and water pressure booster pump service",
+      imageAltAr: "صيانة وتركيب السخان المركزي ومضخات تقوية ضغط المياه في الكويت",
       scopeEn: [
-        "Variable speed constant-pressure pump installation",
-        "Pressure tank (diaphragm) pre-charge inspection",
-        "Basement sump pump wiring and dual float switch setup",
-        "Pump mechanical seal and check-valve replacement",
+        "Water heater installation and repair",
+        "Central water heater maintenance",
+        "Water pressure booster pump installation and repair",
       ],
       scopeAr: [
-        "تركيب مضخات الضغط الذكية ذات السرعات المتغيرة",
-        "فحص ضغط الهواء داخل بلونة الضغط واستبدال التالف منها",
-        "تجهيز مضخات السرداب الغاطسة بعوامات الفصل والتشغيل",
-        "استبدال مانع التسريب الميكانيكي ومحابس عدم الرجوع",
-      ],
-    },
-    {
-      id: "fixture-fitting",
-      slug: "sanitary-fixtures-installations",
-      titleEn: "Sanitary Fixture Installation",
-      titleAr: "تركيب الأدوات الصحية والخلاطات",
-      shortDescriptionEn:
-        "Precision fitting of wall-hung toilets, concealed cisterns, thermostatic mixers, and water filtration units.",
-      shortDescriptionAr:
-        "تركيب وتثبيت المراحيض المعلقة، الصناديق المخفية، خلاطات الدش الثرموستاتية، وفلاتر المياه.",
-      detailedDescriptionEn:
-        "Installation of modern sanitary ware demands millimetric alignment, correct bracket loading, and watertight silicone sealing to prevent seepage into concrete subfloors.",
-      detailedDescriptionAr:
-        "يتطلب تثبيت الأدوات الصحية الحديثة دقة تامة ومحاذاة هندسية صحيحة للهيكل الحديدي للصناديق المدفونة، مع عزل السيليكون المعالج ضد الرطوبة والبكتيريا لحماية الأرضيات والخرسانة.",
-      imagePath: "/images/service-fixture-fitting.webp",
-      imageAltEn: "Precision sanitary ware and concealed cistern installation",
-      imageAltAr: "تركيب دقيق للأدوات الصحية وخلاطات المياه المدمجة بالجدار",
-      scopeEn: [
-        "Concealed cistern frame anchorage and mechanism service",
-        "Wall-hung WC pan installation and acoustic decoupling",
-        "Thermostatic shower mixer cartridge adjustment",
-        "Multi-stage domestic water filter installation",
-      ],
-      scopeAr: [
-        "تثبيت شاسيه الصندوق المدفون وصيانة العوامة ومكبس التصريف",
-        "تركيب المراحيض المعلقة واستخدام العوازل المانعة للاهتزاز",
-        "معايرة خلاطات الدش الذكية واستبدال قلب الخلاط التالف",
-        "توصيل فلاتر تنقية المياه المنزلية متعددة المراحل",
-      ],
-    },
-    {
-      id: "leak-detection",
-      slug: "non-destructive-leak-detection",
-      titleEn: "Diagnostic Leak Detection",
-      titleAr: "كشف الخرير والفحص الهندسي",
-      shortDescriptionEn:
-        "Acoustic and thermal diagnosis of hidden pipe breaches behind ceramic tiling without destructive demolition.",
-      shortDescriptionAr:
-        "تحديد مواضع التسريب الخفية خلف السيراميك والخرسانة بأجهزة الفحص الصوتي والحراري دون تكسير عشوائي.",
-      detailedDescriptionEn:
-        "Hidden pipe fractures cause insidious structural degradation and inflated water utility charges. We deploy electro-acoustic listening discs and thermal imaging sensors to isolate the root source.",
-      detailedDescriptionAr:
-        "يؤدي تسريب المياه غير المرئي إلى تآكل حديد التسليح وتلف الأصباغ وارتفاع غير مبرر في فاتورة المياه. نعتمد أجهزة قياس الضغط وأجهزة التحسس الصوتي والكاميرات الحرارية لتحديد العطل بدقة متناهية.",
-      imagePath: "/images/service-leak-detection.webp",
-      imageAltEn: "Thermal imaging and electro-acoustic pipe leak diagnosis",
-      imageAltAr: "جهاز فحص خرير المياه وكشف التسريبات بالموجات الصوتية والحرارية",
-      scopeEn: [
-        "Acoustic underground & wall pipe listening tests",
-        "Thermal camera differential diagnosis of hot/cold lines",
-        "Sectional pipe pressure isolation testing",
-        "Written diagnostic report of fault location",
-      ],
-      scopeAr: [
-        "فحص شبكات الأنابيب المدفونة بأجهزة الاستماع الكهرومغناطيسية",
-        "استخدام الكاميرات الحرارية لتحديد فروق درجات حرارة المياه",
-        "عزل واختبار ضغط المقاطع المستقلة لتأكيد مكان الخلل",
-        "تقديم تقرير فني واضح عن موقع الخلل وخطة الإصلاح المناسبة",
+        "تركيب وصيانة السخانات العادية والمركزية",
+        "تبديل شمعات السخان وفحص صمامات الأمان",
+        "تركيب وصيانة مضخات تقوية وتدوير ضغط المياه",
       ],
     },
   ] as ServiceDefinition[],
