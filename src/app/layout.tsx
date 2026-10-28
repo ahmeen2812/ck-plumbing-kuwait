@@ -1,13 +1,12 @@
 import type { Metadata, Viewport } from "next";
-import { cookies } from "next/headers";
 import { Manrope, IBM_Plex_Sans_Arabic } from "next/font/google";
 import { SITE_CONFIG } from "@/config/site";
-import { LanguageProvider, type Locale } from "@/lib/LanguageContext";
+import { LanguageProvider } from "@/lib/LanguageContext";
 import "./globals.css";
 
 const manrope = Manrope({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "500", "600", "700", "800"],
   variable: "--font-manrope",
   display: "swap",
 });
@@ -69,16 +68,11 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const cookieStore = await cookies();
-  const rawLocale = cookieStore.get("ck_locale")?.value;
-  const initialLocale: Locale = rawLocale === "en" ? "en" : "ar";
-  const initialDir = initialLocale === "ar" ? "rtl" : "ltr";
-
   const localBusinessJsonLd = {
     "@context": "https://schema.org",
     "@type": "PlumbingService",
@@ -104,9 +98,10 @@ export default async function RootLayout({
 
   return (
     <html
-      lang={initialLocale}
-      dir={initialDir}
+      lang="ar"
+      dir="rtl"
       translate="no"
+      suppressHydrationWarning
       className={`notranslate ${manrope.variable} ${ibmPlexSansArabic.variable}`}
     >
       <head>
@@ -117,7 +112,7 @@ export default async function RootLayout({
         />
       </head>
       <body className="min-h-screen bg-[#F7F5F0] text-[#1E2933] antialiased selection:bg-[#132E3C] selection:text-white">
-        <LanguageProvider initialLocale={initialLocale}>{children}</LanguageProvider>
+        <LanguageProvider>{children}</LanguageProvider>
       </body>
     </html>
   );
