@@ -43,17 +43,17 @@ export function animateHeroEntrance(
   if (heading) {
     tl.fromTo(
       heading,
-      { opacity: 0, y: 18 },
-      { opacity: 1, y: 0, duration: 0.5, clearProps: "transform,opacity" }
+      { opacity: 0, y: 16 },
+      { opacity: 1, y: 0, duration: 0.55, clearProps: "transform,opacity" }
     );
   }
 
   if (description) {
     tl.fromTo(
       description,
-      { opacity: 0, y: 14 },
+      { opacity: 0, y: 12 },
       { opacity: 1, y: 0, duration: 0.45, clearProps: "transform,opacity" },
-      "-=0.3"
+      "-=0.35"
     );
   }
 
@@ -80,4 +80,4 @@ export function animateHeroEntrance(
   }
 
   return tl;
-}9
+}
