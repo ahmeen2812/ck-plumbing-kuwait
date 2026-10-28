@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useLanguage } from "@/lib/LanguageContext";
 import { SITE_CONFIG } from "@/config/site";
-import { animateHeroEntrance } from "./hero.animations";
+import { animateHeroEntrance } from "@/components/sections/hero/hero.animations";
 import { PhoneCall, Wrench, ArrowRight, ArrowLeft } from "lucide-react";
 
 export function HeroMobile() {
@@ -33,23 +33,42 @@ export function HeroMobile() {
     };
   }, [locale]);
 
-  const headingText =
-    content.hero.title ||
-    (locale === "ar"
-      ? "خدمات السباكة والهندسة الصحية المتخصصة في الكويت"
-      : "Precision Plumbing Engineering & Maintenance in Kuwait");
-
   return (
     <div
       ref={containerRef}
-      className="flex lg:hidden flex-col justify-center gap-5 py-8 sm:py-12 w-full max-w-full overflow-hidden"
+      className="flex lg:hidden flex-col justify-center gap-5 pt-4 pb-10 w-full max-w-full overflow-hidden"
     >
-      <h1
-        ref={headingRef}
-        className="text-2xl min-[360px]:text-[1.85rem] font-bold text-[#132E3C] leading-[1.25] tracking-tight break-words"
-      >
-        {headingText}
-      </h1>
+      {locale === "ar" ? (
+        <h1
+          ref={headingRef}
+          className="text-[#132E3C] tracking-tight break-words"
+        >
+          <span className="block text-[1.85rem] min-[380px]:text-3xl font-extrabold leading-[1.18]">
+            خدمات السباكة
+          </span>
+          <span className="block text-xl min-[380px]:text-2xl font-semibold text-[#1E2933] leading-[1.25] mt-1.5">
+            والهندسة الصحية المتخصصة
+          </span>
+          <span className="block text-base min-[380px]:text-lg font-medium text-[#B45C31] mt-1">
+            في دولة الكويت
+          </span>
+        </h1>
+      ) : (
+        <h1
+          ref={headingRef}
+          className="text-[#132E3C] tracking-tight break-words"
+        >
+          <span className="block text-[2rem] min-[380px]:text-[2.35rem] font-extrabold leading-[1.1] text-[#132E3C]">
+            Precision Plumbing
+          </span>
+          <span className="block text-lg min-[380px]:text-xl font-semibold text-[#1E2933] leading-[1.22] mt-1.5">
+            Engineering & Maintenance
+          </span>
+          <span className="block text-base min-[380px]:text-lg font-medium text-[#B45C31] mt-1">
+            in Kuwait
+          </span>
+        </h1>
+      )}
 
       <p
         ref={descriptionRef}
@@ -85,7 +104,7 @@ export function HeroMobile() {
 
       <div
         ref={imageWrapperRef}
-        className="relative w-full aspect-[4/3] bg-[#EFECE6] border border-[#D8DDDD] overflow-hidden mt-3"
+        className="relative w-full aspect-[4/3] bg-[#EFECE6] border border-[#D8DDDD] overflow-hidden mt-2"
       >
         <Image
           src="/images/hero-plumbing-kuwait.webp"
