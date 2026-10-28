@@ -35,13 +35,20 @@ export const contentEn = {
     secondaryCta: "View Capabilities",
   },
 
+  statisticsSection: {
+    eyebrow: "Operational Scale",
+    title: "Documented Service Track Record",
+    subtitle: "Measurable service delivery for villas, residential complexes, and commercial properties throughout Kuwait.",
+    disclaimer: "Figures reflect client-reported service volume across all Kuwait governorates.",
+  },
+
   servicesSection: {
-    eyebrow: "Core Capabilities",
-    title: "Specialized Plumbing & Maintenance Services",
+    eyebrow: "Our Services",
+    title: "Specialized Plumbing Solutions for Kuwait",
     subtitle:
-      "From pressurized municipal line distribution to structural sewer clearing, our protocols adhere strictly to engineering best practices.",
-    viewServiceDetails: "View Technical Scope",
-    scopeHeading: "Standard Execution Scope:",
+      "Disciplined engineering protocols, durable materials, and methodical diagnostics engineered for Kuwait's climate and building standards.",
+    scopeHeading: "Execution Scope:",
+    callCta: "Call Us",
   },
 
   aboutSection: {
