@@ -16,27 +16,32 @@ interface LanguageContextType {
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
-interface LanguageProviderProps {
-  children: React.ReactNode;
-  initialLocale?: Locale;
-}
-
-export function LanguageProvider({
-  children,
-  initialLocale = "ar",
-}: LanguageProviderProps) {
-  const [locale, setLocaleState] = useState<Locale>(initialLocale);
+export function LanguageProvider({ children }: { children: React.ReactNode }) {
+  const [locale, setLocaleState] = useState<Locale>("ar");
   const [, startTransition] = useTransition();
+
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem("ck_preferred_locale") as Locale | null;
+      if (saved === "ar" || saved === "en") {
+        setLocaleState(saved);
+        document.documentElement.lang = saved;
+        document.documentElement.dir = saved === "ar" ? "rtl" : "ltr";
+      }
+    } catch {
+      // Storage unavailable
+    }
+  }, []);
 
   const applyLocale = (newLocale: Locale) => {
     setLocaleState(newLocale);
-    document.cookie = `ck_locale=${newLocale}; path=/; max-age=31536000; SameSite=Lax`;
     document.documentElement.lang = newLocale;
     document.documentElement.dir = newLocale === "ar" ? "rtl" : "ltr";
     try {
       localStorage.setItem("ck_preferred_locale", newLocale);
+      document.cookie = `ck_locale=${newLocale}; path=/; max-age=31536000; SameSite=Lax`;
     } catch {
-      // Storage unavailable or disabled
+      // Storage unavailable
     }
   };
 
@@ -50,11 +55,6 @@ export function LanguageProvider({
     const next = locale === "ar" ? "en" : "ar";
     setLocale(next);
   };
-
-  useEffect(() => {
-    document.documentElement.lang = locale;
-    document.documentElement.dir = locale === "ar" ? "rtl" : "ltr";
-  }, [locale]);
 
   const isRtl = locale === "ar";
   const content = locale === "ar" ? contentAr : contentEn;
