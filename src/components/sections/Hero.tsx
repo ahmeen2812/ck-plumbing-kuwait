@@ -5,8 +5,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useLanguage } from "@/lib/LanguageContext";
 import { SITE_CONFIG } from "@/config/site";
-import { HeroMobile } from "./hero/HeroMobile";
-import { animateHeroEntrance } from "./hero/hero.animations";
+import { HeroMobile } from "@/components/sections/hero/HeroMobile";
+import { animateHeroEntrance } from "@/components/sections/hero/hero.animations";
 import { PhoneCall, Wrench, ArrowRight, ArrowLeft } from "lucide-react";
 
 export function Hero() {
@@ -34,31 +34,47 @@ export function Hero() {
     };
   }, [locale]);
 
-  const headingText =
-    content.hero.title ||
-    (locale === "ar"
-      ? "خدمات السباكة والهندسة الصحية المتخصصة في الكويت"
-      : "Precision Plumbing Engineering & Maintenance in Kuwait");
-
   return (
     <section className="relative w-full bg-[#F7F5F0] border-b border-[#D8DDDD] min-h-[calc(100dvh-72px)] sm:min-h-[calc(100dvh-84px)] flex flex-col justify-center overflow-hidden">
-      <div className="site-container my-auto">
-        {/* Mobile Viewport Layout */}
+      <div className="site-container my-auto pt-2 pb-8 lg:pt-0 lg:pb-6">
         <HeroMobile />
 
-        {/* Desktop Viewport Layout */}
         <div
           ref={containerRef}
-          className="hidden lg:grid grid-cols-12 gap-10 xl:gap-14 items-center py-8 lg:py-12"
+          className="hidden lg:grid grid-cols-12 gap-10 xl:gap-14 items-center py-4 lg:py-6"
         >
-          {/* Text and Call Actions Column */}
           <div className="col-span-7 flex flex-col items-start">
-            <h1
-              ref={headingRef}
-              className="text-3xl sm:text-4xl lg:text-[2.75rem] xl:text-[3.25rem] font-bold text-[#132E3C] tracking-tight leading-[1.2] mb-6"
-            >
-              {headingText}
-            </h1>
+            {locale === "ar" ? (
+              <h1
+                ref={headingRef}
+                className="text-[#132E3C] tracking-tight mb-6 max-w-2xl"
+              >
+                <span className="block text-3xl sm:text-4xl lg:text-[2.85rem] xl:text-[3.35rem] font-extrabold leading-[1.18] text-[#132E3C]">
+                  خدمات السباكة
+                </span>
+                <span className="block text-2xl sm:text-3xl lg:text-[2.15rem] xl:text-[2.5rem] font-semibold text-[#1E2933] leading-[1.25] mt-2">
+                  والهندسة الصحية المتخصصة
+                </span>
+                <span className="block text-lg sm:text-xl lg:text-[1.5rem] font-medium text-[#B45C31] mt-1.5">
+                  في دولة الكويت
+                </span>
+              </h1>
+            ) : (
+              <h1
+                ref={headingRef}
+                className="text-[#132E3C] tracking-tight mb-6 max-w-2xl"
+              >
+                <span className="block text-4xl sm:text-5xl lg:text-[3.25rem] xl:text-[3.75rem] font-extrabold leading-[1.08] text-[#132E3C]">
+                  Precision Plumbing
+                </span>
+                <span className="block text-2xl sm:text-3xl lg:text-[2.15rem] xl:text-[2.5rem] font-semibold text-[#1E2933] leading-[1.2] mt-2">
+                  Engineering & Maintenance
+                </span>
+                <span className="block text-lg sm:text-xl lg:text-[1.5rem] font-medium text-[#B45C31] mt-1.5">
+                  in Kuwait
+                </span>
+              </h1>
+            )}
 
             <p
               ref={descriptionRef}
@@ -93,7 +109,6 @@ export function Hero() {
             </div>
           </div>
 
-          {/* Photograph Column */}
           <div className="col-span-5 w-full">
             <div
               ref={imageWrapperRef}
